@@ -5,10 +5,6 @@ import random
 import time
 
 
-
-
-
-
 # Random number with system time
 worstIV = 0
 
@@ -36,6 +32,17 @@ elif HPIV == "no good" or HPIV == "decent" or HPIV == "pretty good" or HPIV == "
         else:
             print ("You got max IV after", count ,"tries!")
             print ("Current HP IV is", HPIV)
+
+
+
+
+
+
+
+
+
+
+
 
 
 """
