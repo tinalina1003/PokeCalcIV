@@ -1,3 +1,5 @@
+import random
+
 class pokemon:
     def __init__(self, name, HP, ATK, DEF, SPA, SPD, SPE):
         self.name = name
@@ -8,6 +10,9 @@ class pokemon:
         self.SPD = SPD
         self.SPE = SPE
 
-pokemon.HP = input("What is your pokemon's HP IV?: ")
+#pokemon.HP = input("What is your pokemon's HP IV?: ")
 
-print(pokemon.HP)
+unique_numbers = random.sample(range(0, 31), 2)
+
+print (unique_numbers)
+
