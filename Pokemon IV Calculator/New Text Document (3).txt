@@ -1,0 +1,12 @@
+user input how many default max IVs are there
+
+do you have destiny knot
+
+input current IVs
+
+randomize number between 0-31 and replace values depending if you have destiny knot or not
+
+do this until you get 6 IVs
+
+print output of how many eggs you need to hatch
+
