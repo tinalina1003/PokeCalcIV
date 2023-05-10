@@ -5,8 +5,7 @@ import time
 count = 0
 
 class pokemon:
-    def __init__(self, name, HP, ATK, DEF, SPA, SPD, SPE):
-        self.name = name
+    def __init__(self, HP, ATK, DEF, SPA, SPD, SPE):
         self.HP = HP
         self.ATK = ATK
         self.DEF = DEF
@@ -14,11 +13,38 @@ class pokemon:
         self.SPD = SPD
         self.SPE = SPE
 
-pikachu = pokemon("Pikachu", 0, 0, 0, 0, 0, 0)
-bulbasaur = pokemon("Bulbasaur", 31, 31, 31, 31, 31, 31)
+pikachu = pokemon(0, 0, 0, 0, 0, 0)
+bulbasaur = pokemon(31, 31, 31, 31, 31, 31)
 
+childPokemon = pokemon(0, 0, 0, 0, 0, 0)
+
+random_indices = random.sample(range(6), 3)
+
+random_indices.sort()
+
+# Create a list of the attribute names corresponding to the random indices
+attribute_names = [attribute_name for i, attribute_name in enumerate(vars(pikachu)) if i in random_indices]
+
+# Access the randomly selected attributes using their names
+for attribute_name in attribute_names:
+    attribute_value = getattr(pikachu, attribute_name)
+    print(f"{attribute_name}: {attribute_value}")
+
+"""
 if pikachu.HP == 31:
     print ("You already have perfect IV")
+
+elif pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31:
+    while pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31:
+        pikachu.HP = random.randint(0, 31)
+        print("HP: ", pikachu.HP)
+
+        pikachu.ATK = random.randint(0, 31)
+        print("ATK: ", pikachu.ATK)
+
+        pikachu.DEF = random.randint(0, 31)
+        print("DEF: ", pikachu.DEF)
+
 
 elif pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31 or pikachu.SPD < 31 or pikachu.SPE < 31:
     while pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31 or pikachu.SPD < 31 or pikachu.SPE < 31:
@@ -47,4 +73,7 @@ elif pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31
     print ("Current HP IV is", pikachu.HP)
     print ("Current ATK IV is", pikachu.ATK)
     print ("Current DEF IV is", pikachu.DEF)
-    print ("Current 
+    print ("Current SPA IV is", pikachu.SPA)
+    print ("Current SPD IV is", pikachu.SPD)
+    print ("Current SPE IV is", pikachu.SPE)
+    """
