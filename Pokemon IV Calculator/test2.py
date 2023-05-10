@@ -10,4 +10,3 @@ class pokemon:
 
 pokemon.HP = input("What is your pokemon's HP IV")
 
-print(pokemon.HP)
