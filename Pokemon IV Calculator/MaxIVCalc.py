@@ -20,6 +20,14 @@ def inputFunc(inputList, pokeParents):
             else:
                 print("Please input a value IV") #this loop will continue forever on index inputVals until a valid input is received
 
+# a counter to count how many 31's are in each pokemon's IV list
+def perfCount(perfectCounter, ivList):
+    for stats in ivList:
+        if stats == 31:
+            perfectCounter += 1
+    return perfectCounter
+
+
 class pokemon:
     def __init__(self, ivList): # assign each element in the list/array as an attribute for the class
         self.HP = ivList[0]
@@ -34,6 +42,9 @@ ivList2 = [] #pokemon 2
 
 
 count = 0 # just counter things
+parent1PerfCount = 0 # parent 1's perfect IV count
+parent2PerfCount = 0 # parent 2's perfect IV count
+childPerfCount  = 0 # child's perfect IV count
 
 pokemon1 = [ "Please input HP IV for first pokemon > ",
             "Please input ATK IV for first pokemon  > ",
@@ -50,6 +61,8 @@ pokemon2 = [ "Please input HP IV for second pokemon > ",
             "Please input SPE IV for second pokemon  > "]
 
 ################# MAIN CODE ##########################
+
+### NEED TO CREATE DESTINY KNOT####
 
 # Call the inputFunc function twice, once for each Pokemon
 inputFunc(ivList1, pokemon1)
@@ -76,44 +89,55 @@ iv3array[notSelectedIV[2]] = random.randint(0, 31)
 print(iv3array)
 
 # Test print to see if the lists are working
-
-#print("Pokemon 1's IV is", iv1array)
-#print("Pokemon 2's IV is", iv2array)
-
 pokeParent1 = pokemon(iv1array)
 pokeParent2 = pokemon(iv2array)
 pokeChild  = pokemon(iv3array)
 
+
+###### MAKE IT SO THAT THE CHILD COUNT OF 31'S WILL REPLACE THAT OF PARENTS ####
+
+perfCount(parent1PerfCount, iv1array)
+perfCount(parent2PerfCount, iv2array)
+perfCount(childPerfCount, iv3array)
+
+if perfCount(childPerfCount, iv3array) > perfCount(parent1PerfCount, iv1array):
+    iv1array = iv3array
+
+else:
+    iv2array = iv3array
+
+print("New Stats")
+print(iv1array)
+print(iv2array)
+print(iv3array)
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 """
 
-print(pokeParent1.HP)
-print(pokeParent1.ATK)
-print(pokeParent1.DEF)
-print(pokeParent1.SPA)
-print(pokeParent1.SPD)
-print(pokeParent1.SPE)
-
-print(pokeParent2.HP)
-print(pokeParent2.ATK)
-print(pokeParent2.DEF)
-print(pokeParent2.SPA)
-print(pokeParent2.SPD)
-print(pokeParent2.SPE)
-
-
-random_indices = random.sample(range(6), 3)
-
-random_indices.sort()
-
-
-# Create a list of the attribute names corresponding to the random indices
-attribute_names = [attribute_name for i, attribute_name in enumerate(vars(pikachu)) if i in random_indices]
-
-# Access the randomly selected attributes using their names
-for attribute_name in attribute_names:
-    attribute_value = getattr(pikachu, attribute_name)
-    print(f"{attribute_name}: {attribute_value}")
-"""
 ############  CODE NOT WORKING ####################
 ######## WILL  NEED TO MAKE IT SO IT STILL PASSES ON THE 3 ATTRIBUTES  ############
 if pokeChild.HP == 31 and pokeChild.ATK == 31 and pokeChild.DEF == 31  and pokeChild.SPA == 31 and pokeChild.SPD == 31 and pokeChild.SPE == 31:
@@ -132,7 +156,7 @@ elif pokeChild.HP < 31 or pokeChild.ATK < 31 or pokeChild.DEF < 31  or pokeChild
 
 attrs_as_array = list(pokeChild.__dict__.values())
 print(attrs_as_array)
-"""
+
 if ivList3[i] == 31:
     print ("You already have perfect IV")
 
