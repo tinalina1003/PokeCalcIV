@@ -3,7 +3,6 @@ import random
 import time
 
 ################## DEFINE STUFF ############################
-count = 0
 
 def inputFunc(inputList, pokeParents):
     for inputVals in pokeParents:
@@ -22,17 +21,19 @@ def inputFunc(inputList, pokeParents):
                 print("Please input a value IV") #this loop will continue forever on index inputVals until a valid input is received
 
 class pokemon:
-    def __init__(self, HP, ATK, DEF, SPA, SPD, SPE):
-        self.HP = HP
-        self.ATK = ATK
-        self.DEF = DEF
-        self.SPA = SPA
-        self.SPD = SPD
-        self.SPE = SPE
+    def __init__(self, ivList): # assign each element in the list/array as an attribute for the class
+        self.HP = ivList[0]
+        self.ATK = ivList[1]
+        self.DEF = ivList[2]
+        self.SPA = ivList[3]
+        self.SPD = ivList[4]
+        self.SPE = ivList[5]
 
 ivList1 = [] #pokemon 1
 ivList2 = [] #pokemon 2
-ivList3 = [] #pokemon 3   
+ivList3 = [] #pokemon 3
+
+count = 0 # just counter things
 
 pokemon1 = [ "Please input HP IV for first pokemon > ",
             "Please input ATK IV for first pokemon  > ",
@@ -54,23 +55,49 @@ pokemon2 = [ "Please input HP IV for second pokemon > ",
 inputFunc(ivList1, pokemon1)
 inputFunc(ivList2, pokemon2)
 
-# Test print to see if the lists are working
-print(ivList1)
-print(ivList2)
+# Set the lists to arrays to manipulate elements easier
+iv1array = array(ivList1)
+iv2array  = array(ivList2)
 
+# Test print to see if the lists are working
+
+#print("Pokemon 1's IV is", iv1array)
+#print("Pokemon 2's IV is", iv2array)
+
+pokeParent1 = pokemon(iv1array)
+pokeParent2 = pokemon(iv2array)
+
+for i in range(len(iv1array)):
+    choice = random.choice([0, 1])
+    if choice == 0:
+        #print(iv1array[i])
+        ivList3.append(iv1array[i])
+    else:
+        #print(iv2array[i])
+        ivList3.append(iv2array[i])
+
+print(ivList3)
 
 
 """
-pikachu = pokemon(0, 0, 0, 0, 0, 0)
-bulbasaur = pokemon(31, 31, 31, 31, 31, 31)
+print(pokeParent1.HP)
+print(pokeParent1.ATK)
+print(pokeParent1.DEF)
+print(pokeParent1.SPA)
+print(pokeParent1.SPD)
+print(pokeParent1.SPE)
 
-childPokemon = pokemon(0, 0, 0, 0, 0, 0)
+print(pokeParent2.HP)
+print(pokeParent2.ATK)
+print(pokeParent2.DEF)
+print(pokeParent2.SPA)
+print(pokeParent2.SPD)
+print(pokeParent2.SPE)
+
 
 random_indices = random.sample(range(6), 3)
 
 random_indices.sort()
-
-
 
 
 # Create a list of the attribute names corresponding to the random indices
