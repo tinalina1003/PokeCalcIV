@@ -31,7 +31,7 @@ class pokemon:
 
 ivList1 = [] #pokemon 1
 ivList2 = [] #pokemon 2
-ivList3 = [] #pokemon 3
+
 
 count = 0 # just counter things
 
@@ -59,27 +59,33 @@ inputFunc(ivList2, pokemon2)
 iv1array = array(ivList1)
 iv2array  = array(ivList2)
 
+# choose 3 random numbers between 1 and 6 (but elements 0 to 5)
+selectedIV = random.sample(range(6), 3)
+notSelectedIV = [i for i in range(6) if i not in selectedIV] # this checks if the numbers are inside selectedIV or not. If it's not, then it creates a new list of notSelectedIV
+
+print(selectedIV)
+
+ivList3 = [iv1array[selectedIV[0]], iv1array[selectedIV[1]], iv1array[selectedIV[1]],
+           iv2array[selectedIV[0]], iv2array[selectedIV[1]], iv2array[selectedIV[2]]] #pokemon 3
+
+random.shuffle(notSelectedIV)
+ivList3[notSelectedIV[0]] = random.randint(0, 31)
+ivList3[notSelectedIV[1]] = random.randint(0, 31)
+ivList3[notSelectedIV[2]] = random.randint(0, 31)
+
+print(ivList3)
+
 # Test print to see if the lists are working
 
 #print("Pokemon 1's IV is", iv1array)
 #print("Pokemon 2's IV is", iv2array)
 
-pokeParent1 = pokemon(iv1array)
-pokeParent2 = pokemon(iv2array)
-
-for i in range(len(iv1array)):
-    choice = random.choice([0, 1])
-    if choice == 0:
-        #print(iv1array[i])
-        ivList3.append(iv1array[i])
-    else:
-        #print(iv2array[i])
-        ivList3.append(iv2array[i])
-
-print(ivList3)
+#pokeParent1 = pokemon(iv1array)
+#pokeParent2 = pokemon(iv2array)
 
 
 """
+
 print(pokeParent1.HP)
 print(pokeParent1.ATK)
 print(pokeParent1.DEF)
