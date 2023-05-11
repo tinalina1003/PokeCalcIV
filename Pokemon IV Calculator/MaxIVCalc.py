@@ -4,6 +4,22 @@ import time
 
 count = 0
 
+def inputFunc():
+    for inputVals in pokemon1:
+        while True:
+            pokeIV1 = input(inputVals)
+
+            if pokeIV1 == "perfect":
+                ivList1.append(31)
+                break # break out of the while loop and goes to the next index
+
+            elif pokeIV1 in ["no good", "decent", "pretty good", "very good", "fantastic"]:
+                ivList1.append(0)
+                break # break out of the while loop and goes to  the next index
+
+            else:
+                print("Please input a value IV") #this loop will continue forever on index inputVals until a valid input is received
+
 class pokemon:
     def __init__(self, HP, ATK, DEF, SPA, SPD, SPE):
         self.HP = HP
@@ -13,25 +29,28 @@ class pokemon:
         self.SPD = SPD
         self.SPE = SPE
 
-numb_array = zeros(6, dtype = str)
-numb_list = []
+################# MAIN CODE ##########################
 
-numb1 = input("Please input HP IV > ")
-numb2 = input("Please input ATK IV > ")
-numb3 = input("Please input DEF IV > ")
-numb4 = input("Please input SPA IV > ")
-numb5 = input("Please input SPD IV > ")
-numb6 = input("Please input SPE IV > ")
-
-numb_list.append(numb1)
-numb_list.append(numb2)
-numb_list.append(numb3)
-numb_list.append(numb4)
-numb_list.append(numb5)
-numb_list.append(numb6)
+ivList1 = [] #pokemon 1
+ivList2 = [] #pokemon 2
+ivList3 = [] #pokemon 3
 
 
-print(numb_list)
+pokemon1 = [ "Please input HP IV for first pokemon > ",
+            "Please input ATK IV for first pokemon  > ",
+            "Please input DEF IV for first pokemon  > ",
+            "Please input SPA IV for first pokemon  > ",
+            "Please input SPD IV for first pokemon  > ",
+            "Please input SPE IV for first pokemon  > "]
+
+inputFunc()
+
+print(ivList1)
+
+
+
+
+
 
 """
 pikachu = pokemon(0, 0, 0, 0, 0, 0)
