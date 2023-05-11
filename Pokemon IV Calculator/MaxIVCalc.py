@@ -2,19 +2,20 @@ from numpy import *
 import random
 import time
 
+################## DEFINE STUFF ############################
 count = 0
 
-def inputFunc():
-    for inputVals in pokemon1:
+def inputFunc(inputList, pokeParents):
+    for inputVals in pokeParents:
         while True:
             pokeIV1 = input(inputVals)
 
             if pokeIV1 == "perfect":
-                ivList1.append(31)
+                inputList.append(31) #appends to the different lists
                 break # break out of the while loop and goes to the next index
 
             elif pokeIV1 in ["no good", "decent", "pretty good", "very good", "fantastic"]:
-                ivList1.append(0)
+                inputList.append(0) #appends to the different lists
                 break # break out of the while loop and goes to  the next index
 
             else:
@@ -29,12 +30,9 @@ class pokemon:
         self.SPD = SPD
         self.SPE = SPE
 
-################# MAIN CODE ##########################
-
 ivList1 = [] #pokemon 1
 ivList2 = [] #pokemon 2
-ivList3 = [] #pokemon 3
-
+ivList3 = [] #pokemon 3   
 
 pokemon1 = [ "Please input HP IV for first pokemon > ",
             "Please input ATK IV for first pokemon  > ",
@@ -43,12 +41,22 @@ pokemon1 = [ "Please input HP IV for first pokemon > ",
             "Please input SPD IV for first pokemon  > ",
             "Please input SPE IV for first pokemon  > "]
 
-inputFunc()
+pokemon2 = [ "Please input HP IV for second pokemon > ",
+            "Please input ATK IV for second pokemon  > ",
+            "Please input DEF IV for second pokemon  > ",
+            "Please input SPA IV for second pokemon  > ",
+            "Please input SPD IV for second pokemon  > ",
+            "Please input SPE IV for second pokemon  > "]
 
+################# MAIN CODE ##########################
+
+# Call the inputFunc function twice, once for each Pokemon
+inputFunc(ivList1, pokemon1)
+inputFunc(ivList2, pokemon2)
+
+# Test print to see if the lists are working
 print(ivList1)
-
-
-
+print(ivList2)
 
 
 
