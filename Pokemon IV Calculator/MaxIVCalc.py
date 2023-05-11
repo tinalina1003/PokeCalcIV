@@ -63,26 +63,26 @@ iv2array  = array(ivList2)
 selectedIV = random.sample(range(6), 3)
 notSelectedIV = [i for i in range(6) if i not in selectedIV] # this checks if the numbers are inside selectedIV or not. If it's not, then it creates a new list of notSelectedIV
 
-print(selectedIV)
+print("Elements", selectedIV, "are passed down to offspring")
 
-ivList3 = [iv1array[selectedIV[0]], iv1array[selectedIV[1]], iv1array[selectedIV[1]],
+iv3array = [iv1array[selectedIV[0]], iv1array[selectedIV[1]], iv1array[selectedIV[1]],
            iv2array[selectedIV[0]], iv2array[selectedIV[1]], iv2array[selectedIV[2]]] #pokemon 3
 
 random.shuffle(notSelectedIV)
-ivList3[notSelectedIV[0]] = random.randint(0, 31)
-ivList3[notSelectedIV[1]] = random.randint(0, 31)
-ivList3[notSelectedIV[2]] = random.randint(0, 31)
+iv3array[notSelectedIV[0]] = random.randint(0, 31)
+iv3array[notSelectedIV[1]] = random.randint(0, 31)
+iv3array[notSelectedIV[2]] = random.randint(0, 31)
 
-print(ivList3)
+print(iv3array)
 
 # Test print to see if the lists are working
 
 #print("Pokemon 1's IV is", iv1array)
 #print("Pokemon 2's IV is", iv2array)
 
-#pokeParent1 = pokemon(iv1array)
-#pokeParent2 = pokemon(iv2array)
-
+pokeParent1 = pokemon(iv1array)
+pokeParent2 = pokemon(iv2array)
+pokeChild  = pokemon(iv3array)
 
 """
 
@@ -113,51 +113,69 @@ attribute_names = [attribute_name for i, attribute_name in enumerate(vars(pikach
 for attribute_name in attribute_names:
     attribute_value = getattr(pikachu, attribute_name)
     print(f"{attribute_name}: {attribute_value}")
+"""
+############  CODE NOT WORKING ####################
+######## WILL  NEED TO MAKE IT SO IT STILL PASSES ON THE 3 ATTRIBUTES  ############
+if pokeChild.HP == 31 and pokeChild.ATK == 31 and pokeChild.DEF == 31  and pokeChild.SPA == 31 and pokeChild.SPD == 31 and pokeChild.SPE == 31:
+    print("You have perfect IV pokemon!")
 
+elif pokeChild.HP < 31 or pokeChild.ATK < 31 or pokeChild.DEF < 31  or pokeChild.SPA < 31 or pokeChild.SPD < 31 or pokeChild.SPE < 31:
+    while pokeChild.HP < 31 or pokeChild.ATK < 31 or pokeChild.DEF < 31  or pokeChild.SPA < 31 or pokeChild.SPD < 31 or pokeChild.SPE < 31:
+        pokeChild.HP = random.randint(0, 31)
+        pokeChild.ATK = random.randint(0, 31)
+        pokeChild.DEF = random.randint(0, 31)
+        pokeChild.SPA = random.randint(0, 31)
+        pokeChild.SPD = random.randint(0, 31)
+        pokeChild.SPE = random.randint(0, 31)
+        count += 1
+        print(count)
 
-if pikachu.HP == 31:
+attrs_as_array = list(pokeChild.__dict__.values())
+print(attrs_as_array)
+"""
+if ivList3[i] == 31:
     print ("You already have perfect IV")
 
-elif pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31:
-    while pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31:
-        pikachu.HP = random.randint(0, 31)
-        print("HP: ", pikachu.HP)
+elif ivList3[i]:
+        while pokeParent1.HP < 31 and pokeParent1.ATK < 31 and pokeParent1.DEF < 31 and pokeParent1.SPA < 31:
+            pokeParent1.HP = random.randint(0, 31)
+            print("HP: ", pokeParent1.HP)
 
-        pikachu.ATK = random.randint(0, 31)
-        print("ATK: ", pikachu.ATK)
+            pokeParent1.ATK = random.randint(0, 31)
+            print("ATK: ", pokeParent1.ATK)
 
-        pikachu.DEF = random.randint(0, 31)
-        print("DEF: ", pikachu.DEF)
+            pokeParent1.DEF = random.randint(0, 31)
+            print("DEF: ", pokeParent1.DEF)
 
 
-elif pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31 or pikachu.SPD < 31 or pikachu.SPE < 31:
-    while pikachu.HP < 31 or pikachu.ATK < 31 or pikachu.DEF < 31 or pikachu.SPA < 31 or pikachu.SPD < 31 or pikachu.SPE < 31:
+elif pokeParent1.HP < 31 and pokeParent1.ATK < 31 and pokeParent1.DEF < 31 and pokeParent1.SPA < 31 and pokeParent1.SPD < 31 and pokeParent1.SPE < 31:
+    while pokeParent1.HP < 31 and pokeParent1.ATK < 31 and pokeParent1.DEF < 31 and pokeParent1.SPA < 31 and pokeParent1.SPD < 31 and pokeParent1.SPE < 31:
 
-        pikachu.HP = random.randint(0, 31)
-        print("HP: ", pikachu.HP)
+        pokeParent1.HP = random.randint(0, 31)
+        print("HP: ", pokeParent1.HP)
 
-        pikachu.ATK = random.randint(0, 31)
-        print("ATK: ", pikachu.ATK)
+        pokeParent1.ATK = random.randint(0, 31)
+        print("ATK: ", pokeParent1.ATK)
 
-        pikachu.DEF = random.randint(0, 31)
-        print("DEF: ", pikachu.DEF)
+        pokeParent1.DEF = random.randint(0, 31)
+        print("DEF: ", pokeParent1.DEF)
 
-        pikachu.SPA = random.randint(0, 31)
-        print("SPA: ", pikachu.SPA)
+        pokeParent1.SPA = random.randint(0, 31)
+        print("SPA: ", pokeParent1.SPA)
 
-        pikachu.SPD = random.randint(0, 31)
-        print("SPD: ", pikachu.SPD)
+        pokeParent1.SPD = random.randint(0, 31)
+        print("SPD: ", pokeParent1.SPD)
 
-        pikachu.SPE = random.randint(0, 31)
-        print("SPE: ", pikachu.SPE)
+        pokeParent1.SPE = random.randint(0, 31)
+        print("SPE: ", pokeParent1.SPE)
 
         count += 1
 
     print ("You got max IV after", count ,"tries!")
-    print ("Current HP IV is", pikachu.HP)
-    print ("Current ATK IV is", pikachu.ATK)
-    print ("Current DEF IV is", pikachu.DEF)
-    print ("Current SPA IV is", pikachu.SPA)
-    print ("Current SPD IV is", pikachu.SPD)
-    print ("Current SPE IV is", pikachu.SPE)
-    """
+    print ("Current HP IV is", pokeParent1.HP)
+    print ("Current ATK IV is", pokeParent1.ATK)
+    print ("Current DEF IV is", pokeParent1.DEF)
+    print ("Current SPA IV is", pokeParent1.SPA)
+    print ("Current SPD IV is", pokeParent1.SPD)
+    print ("Current SPE IV is", pokeParent1.SPE)
+"""
