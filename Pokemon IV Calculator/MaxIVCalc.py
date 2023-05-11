@@ -1,6 +1,6 @@
-from numpy import *
+import numpy as np
 import random
-import time
+
 
 ################## DEFINE STUFF ############################
 
@@ -60,26 +60,35 @@ pokemon2 = [ "Please input HP IV for second pokemon > ",
             "Please input SPD IV for second pokemon  > ",
             "Please input SPE IV for second pokemon  > "]
 
+counter =  0
+
+# this an array of all 31s. Use this to check
+def all_thirtyones(numbers):
+    return all(num == 31 for num in numbers)
+
+
+
 ################# MAIN CODE ##########################
 
 ### NEED TO CREATE DESTINY KNOT####
 
-# Call the inputFunc function twice, once for each Pokemon
+# Call the inputFunc function twice, once for each Pokemon. This sets initial conditions
 inputFunc(ivList1, pokemon1)
 inputFunc(ivList2, pokemon2)
 
 # Set the lists to arrays to manipulate elements easier
-iv1array = array(ivList1)
-iv2array  = array(ivList2)
+iv1array = np.array(ivList1)
+iv2array  = np.array(ivList2)
+
 
 # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
 selectedIV = random.sample(range(6), 3)
 notSelectedIV = [i for i in range(6) if i not in selectedIV] # this checks if the numbers are inside selectedIV or not. If it's not, then it creates a new list of notSelectedIV
 
-print("Elements", selectedIV, "are passed down to offspring")
+print("Elements", np.sort(selectedIV), "are passed down to offspring") # sort to make it easier to look at elements
 
 iv3array = [iv1array[selectedIV[0]], iv1array[selectedIV[1]], iv1array[selectedIV[1]],
-           iv2array[selectedIV[0]], iv2array[selectedIV[1]], iv2array[selectedIV[2]]] #pokemon 3
+           iv2array[selectedIV[0]], iv2array[selectedIV[1]], iv2array[selectedIV[2]]] # pokemon 3 array
 
 random.shuffle(notSelectedIV)
 iv3array[notSelectedIV[0]] = random.randint(0, 31)
@@ -89,6 +98,8 @@ iv3array[notSelectedIV[2]] = random.randint(0, 31)
 print(iv3array)
 
 # Test print to see if the lists are working
+
+# convert attributes to array
 pokeParent1 = pokemon(iv1array)
 pokeParent2 = pokemon(iv2array)
 pokeChild  = pokemon(iv3array)
@@ -109,10 +120,17 @@ else:
 print("New Stats")
 print(iv1array)
 print(iv2array)
-print(iv3array)
-    
 
 
+
+# this is a test check and will replace with random numbers until all 31s... which is not what I want
+while not all_thirtyones(iv1array):
+    for j, num in enumerate(iv1array):
+        if num != 31:
+            iv1array[j] = random.randint(0,31)
+            counter += 1
+    print(iv1array)
+    print(counter)
 
 
 
