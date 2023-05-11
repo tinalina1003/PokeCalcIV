@@ -13,6 +13,27 @@ class pokemon:
         self.SPD = SPD
         self.SPE = SPE
 
+numb_array = zeros(6, dtype = str)
+numb_list = []
+
+numb1 = input("Please input HP IV > ")
+numb2 = input("Please input ATK IV > ")
+numb3 = input("Please input DEF IV > ")
+numb4 = input("Please input SPA IV > ")
+numb5 = input("Please input SPD IV > ")
+numb6 = input("Please input SPE IV > ")
+
+numb_list.append(numb1)
+numb_list.append(numb2)
+numb_list.append(numb3)
+numb_list.append(numb4)
+numb_list.append(numb5)
+numb_list.append(numb6)
+
+
+print(numb_list)
+
+"""
 pikachu = pokemon(0, 0, 0, 0, 0, 0)
 bulbasaur = pokemon(31, 31, 31, 31, 31, 31)
 
@@ -22,6 +43,9 @@ random_indices = random.sample(range(6), 3)
 
 random_indices.sort()
 
+
+
+
 # Create a list of the attribute names corresponding to the random indices
 attribute_names = [attribute_name for i, attribute_name in enumerate(vars(pikachu)) if i in random_indices]
 
@@ -30,7 +54,7 @@ for attribute_name in attribute_names:
     attribute_value = getattr(pikachu, attribute_name)
     print(f"{attribute_name}: {attribute_value}")
 
-"""
+
 if pikachu.HP == 31:
     print ("You already have perfect IV")
 
