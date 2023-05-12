@@ -1,7 +1,6 @@
 import numpy as np
 import random
 
-
 ################## DEFINE STUFF ############################
 
 def inputFunc(inputList, pokeParents):
@@ -67,7 +66,6 @@ def all_thirtyones(numbers):
     return all(num == 31 for num in numbers)
 
 
-
 ################# MAIN CODE ##########################
 
 ### NEED TO CREATE DESTINY KNOT####
@@ -95,6 +93,9 @@ iv3array[notSelectedIV[0]] = random.randint(0, 31)
 iv3array[notSelectedIV[1]] = random.randint(0, 31)
 iv3array[notSelectedIV[2]] = random.randint(0, 31)
 
+# I need to set this as an array to manipulate
+iv3array = np.array(iv3array)
+
 print(iv3array)
 
 # Test print to see if the lists are working
@@ -121,16 +122,6 @@ print("New Stats")
 print(iv1array)
 print(iv2array)
 
-
-
-# this is a test check and will replace with random numbers until all 31s... which is not what I want
-while not all_thirtyones(iv1array):
-    for j, num in enumerate(iv1array):
-        if num != 31:
-            iv1array[j] = random.randint(0,31)
-            counter += 1
-    print(iv1array)
-    print(counter)
 
 
 
