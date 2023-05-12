@@ -39,34 +39,16 @@ class pokemon:
 ivList1 = [] #pokemon 1
 ivList2 = [] #pokemon 2
 ivList3 = [0, 0, 0, 0, 0, 0] #initialize pokemon
+perfectList = [31, 31, 31, 31, 31, 31] # perfect IV list to check with
 
-
-count = 0 # just counter things
+counter =  0 # just counter things
 parent1PerfCount = 0 # parent 1's perfect IV count
 parent2PerfCount = 0 # parent 2's perfect IV count
 childPerfCount  = 0 # child's perfect IV count
 
-pokemon1 = [ "Please input HP IV for first pokemon > ",
-            "Please input ATK IV for first pokemon  > ",
-            "Please input DEF IV for first pokemon  > ",
-            "Please input SPA IV for first pokemon  > ",
-            "Please input SPD IV for first pokemon  > ",
-            "Please input SPE IV for first pokemon  > "]
+pokemon1 = [ "Please input {stat} IV for first pokemon > " for stat in ["HP","ATK","DEF","SPA","SPD","SPE"]]
+pokemon2 = [ "Please input {stat} IV for second pokemon > " for stat in ["HP","ATK","DEF","SPA","SPD","SPE"]]
 
-pokemon2 = [ "Please input HP IV for second pokemon > ",
-            "Please input ATK IV for second pokemon  > ",
-            "Please input DEF IV for second pokemon  > ",
-            "Please input SPA IV for second pokemon  > ",
-            "Please input SPD IV for second pokemon  > ",
-            "Please input SPE IV for second pokemon  > "]
-
-counter =  0
-
-# this an array of all 31s. Use this to check
-def all_thirtyones(numbers):
-    return all(num == 31 for num in numbers)
-
-perfectList = [31, 31, 31, 31, 31, 31]
 
 ################# MAIN CODE ##########################
 
@@ -95,7 +77,7 @@ print(ivList2)
 while ivList1 != perfectList and ivList2 != perfectList:
     # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
     selectedIV = random.sample(range(6), 3 if DK == "n" else 5) # 3 if default, 5 with destiny knot
-    notSelectedIV = list(set(range(6)) - set(selectedIV)) # this gets the list of notSelectedIV by subtracting selectedIV from the set of all possible indices
+    notSelectedIV = list(set(range(6)) - set(selectedIV)) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
 
     print("Elements", np.sort(selectedIV), "are passed down to offspring") # sort to make it easier to look at elements
 
