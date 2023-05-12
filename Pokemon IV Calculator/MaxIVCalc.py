@@ -29,12 +29,7 @@ def perfCount(perfectCounter, ivList):
 
 class pokemon:
     def __init__(self, ivList): # assign each element in the list/array as an attribute for the class
-        self.HP = ivList[0]
-        self.ATK = ivList[1]
-        self.DEF = ivList[2]
-        self.SPA = ivList[3]
-        self.SPD = ivList[4]
-        self.SPE = ivList[5]
+        self.HP, self.ATK, self.DEF, self.SPA, self.SPD, self.SPE = ivList
 
 ivList1 = [] #pokemon 1
 ivList2 = [] #pokemon 2
@@ -46,8 +41,8 @@ parent1PerfCount = 0 # parent 1's perfect IV count
 parent2PerfCount = 0 # parent 2's perfect IV count
 childPerfCount  = 0 # child's perfect IV count
 
-pokemon1 = [ "Please input {stat} IV for first pokemon > " for stat in ["HP","ATK","DEF","SPA","SPD","SPE"]]
-pokemon2 = [ "Please input {stat} IV for second pokemon > " for stat in ["HP","ATK","DEF","SPA","SPD","SPE"]]
+pokemon1 = [f"Please input {stat} IV for first pokemon > " for stat in ["HP","ATK","DEF","SPA","SPD","SPE"]] # formatted string which if you put in {} will replace whats in the list into there
+pokemon2 = [f"Please input {stat} IV for second pokemon > " for stat in ["HP","ATK","DEF","SPA","SPD","SPE"]]
 
 
 ################# MAIN CODE ##########################
@@ -81,6 +76,7 @@ while ivList1 != perfectList and ivList2 != perfectList:
 
     print("Elements", np.sort(selectedIV), "are passed down to offspring") # sort to make it easier to look at elements
 
+
     ivList3 = [ivList1[selectedIV[0]], ivList1[selectedIV[1]], ivList1[selectedIV[2]],
             ivList2[selectedIV[0]], ivList2[selectedIV[1]], ivList2[selectedIV[2]]] # pokemon 3 array
 
@@ -93,7 +89,6 @@ while ivList1 != perfectList and ivList2 != perfectList:
         break
     else:
         ###### MAKE IT SO THAT THE CHILD COUNT OF 31'S WILL REPLACE THAT OF PARENTS ####
-
         perfCount(parent1PerfCount, ivList1)
         perfCount(parent2PerfCount, ivList2)
         perfCount(childPerfCount, ivList3)
@@ -101,11 +96,8 @@ while ivList1 != perfectList and ivList2 != perfectList:
         if perfCount(childPerfCount, ivList3) > perfCount(parent1PerfCount, ivList1):
             ivList1 = ivList3
 
-
         if perfCount(childPerfCount, ivList3) > perfCount(parent2PerfCount, ivList2):
             ivList2 = ivList3
-
-
 
         print("New Stats")
         print("This is pokemon 1's stats", ivList1)
