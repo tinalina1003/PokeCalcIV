@@ -38,6 +38,7 @@ class pokemon:
 
 ivList1 = [] #pokemon 1
 ivList2 = [] #pokemon 2
+ivList3 = [0, 0, 0, 0, 0, 0] #initialize pokemon
 
 
 count = 0 # just counter things
@@ -65,65 +66,95 @@ counter =  0
 def all_thirtyones(numbers):
     return all(num == 31 for num in numbers)
 
+perfectList = [31, 31, 31, 31, 31, 31]
 
 ################# MAIN CODE ##########################
 
 ### NEED TO CREATE DESTINY KNOT####
+destinyKnot = False
+
+while destinyKnot == False:
+    DK = input("Do you have destiny knot? [y/n] ")
+    if DK == "y":
+        destinyKnot = True
+
+    elif DK == "n":
+        destinyKnot = False
+    else:
+        print("Please input a correct input")
 
 # Call the inputFunc function twice, once for each Pokemon. This sets initial conditions
 inputFunc(ivList1, pokemon1)
 inputFunc(ivList2, pokemon2)
 
+print(ivList1)
+print(ivList2)
 # Set the lists to arrays to manipulate elements easier
-iv1array = np.array(ivList1)
-iv2array  = np.array(ivList2)
+#iv1array = np.array(ivList1)
+#iv2array  = np.array(ivList2)
 
 
-# choose 3 random numbers between 1 and 6 (but elements 0 to 5)
-selectedIV = random.sample(range(6), 3)
-notSelectedIV = [i for i in range(6) if i not in selectedIV] # this checks if the numbers are inside selectedIV or not. If it's not, then it creates a new list of notSelectedIV
+# check if either of the iv lists matches max IV
+while ivList1 != perfectList and ivList2 != perfectList:
+    if DK == "y": # if destiny knot available, choose 5 stats
+        
+        # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
+        selectedIV = random.sample(range(6), 5) # choose 5 attributes due to destiny knot
+        notSelectedIV = [i for i in range(6) if i not in selectedIV] # this checks if the numbers are inside selectedIV or not. If it's not, then it creates a new list of notSelectedIV
 
-print("Elements", np.sort(selectedIV), "are passed down to offspring") # sort to make it easier to look at elements
+        print("Elements", np.sort(selectedIV), "are passed down to offspring") # sort to make it easier to look at elements
 
-iv3array = [iv1array[selectedIV[0]], iv1array[selectedIV[1]], iv1array[selectedIV[1]],
-           iv2array[selectedIV[0]], iv2array[selectedIV[1]], iv2array[selectedIV[2]]] # pokemon 3 array
+        ivList3 = [ivList1[selectedIV[0]], ivList1[selectedIV[1]], ivList1[selectedIV[2]],
+                ivList2[selectedIV[0]], ivList2[selectedIV[1]], ivList2[selectedIV[2]]] # pokemon 3 array
 
-random.shuffle(notSelectedIV)
-iv3array[notSelectedIV[0]] = random.randint(0, 31)
-iv3array[notSelectedIV[1]] = random.randint(0, 31)
-iv3array[notSelectedIV[2]] = random.randint(0, 31)
+        random.shuffle(notSelectedIV)
+        ivList3[notSelectedIV[0]] = random.randint(0, 31)
 
-# I need to set this as an array to manipulate
-iv3array = np.array(iv3array)
+    else: # this is for default 3 stats
+        # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
+        selectedIV = random.sample(range(6), 3) # only choose default 3 stats
+        notSelectedIV = [i for i in range(6) if i not in selectedIV] # this checks if the numbers are inside selectedIV or not. If it's not, then it creates a new list of notSelectedIV
 
-print(iv3array)
+        print("Elements", np.sort(selectedIV), "are passed down to offspring") # sort to make it easier to look at elements
 
-# Test print to see if the lists are working
+        ivList3 = [ivList1[selectedIV[0]], ivList1[selectedIV[1]], ivList1[selectedIV[2]],
+                ivList2[selectedIV[0]], ivList2[selectedIV[1]], ivList2[selectedIV[2]]] # pokemon 3 array
 
-# convert attributes to array
-pokeParent1 = pokemon(iv1array)
-pokeParent2 = pokemon(iv2array)
-pokeChild  = pokemon(iv3array)
+        random.shuffle(notSelectedIV)
+        ivList3[notSelectedIV[0]] = random.randint(0, 31)
+        ivList3[notSelectedIV[1]] = random.randint(0, 31)
+        ivList3[notSelectedIV[2]] = random.randint(0, 31)
 
+    # Test print to see if the lists are working
 
-###### MAKE IT SO THAT THE CHILD COUNT OF 31'S WILL REPLACE THAT OF PARENTS ####
-
-perfCount(parent1PerfCount, iv1array)
-perfCount(parent2PerfCount, iv2array)
-perfCount(childPerfCount, iv3array)
-
-if perfCount(childPerfCount, iv3array) > perfCount(parent1PerfCount, iv1array):
-    iv1array = iv3array
-
-else:
-    iv2array = iv3array
-
-print("New Stats")
-print(iv1array)
-print(iv2array)
+    # convert attributes to array
+    pokeParent1 = pokemon(ivList1)
+    pokeParent2 = pokemon(ivList2)
+    pokeChild  = pokemon(ivList3)
 
 
+    ###### MAKE IT SO THAT THE CHILD COUNT OF 31'S WILL REPLACE THAT OF PARENTS ####
 
+    perfCount(parent1PerfCount, ivList1)
+    perfCount(parent2PerfCount, ivList2)
+    perfCount(childPerfCount, ivList3)
+
+    if perfCount(childPerfCount, ivList3) > perfCount(parent1PerfCount, ivList1):
+        ivList1 = ivList3
+
+    if perfCount(childPerfCount, ivList3) > perfCount(parent2PerfCount, ivList2):
+        ivList2 = ivList3
+
+
+    print("New Stats")
+    print("This is pokemon 1's stats", ivList1)
+    print("This is pokemon 2's stats", ivList2)
+    print("This is pokemon 3's stats", ivList3)
+
+    counter += 1
+    print("Counter is at ",counter)
+    
+print("Congrats, at least one pokemon is perfect IV")
 
 
 
