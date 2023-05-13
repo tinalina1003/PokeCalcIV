@@ -42,7 +42,7 @@ ivList2 = stats2.tolist() #pokemon 2
 ivList3 = [0, 0, 0, 0, 0, 0] #initialize pokemon
 perfectList = [31, 31, 31, 31, 31, 31] # perfect IV list to check with
 
-counter =  0 # just counter things
+counter =  1 # just counter things
 parent1PerfCount = 0 # parent 1's perfect IV count
 parent2PerfCount = 0 # parent 2's perfect IV count
 childPerfCount  = 0 # child's perfect IV count
@@ -71,12 +71,15 @@ while destinyKnot == False:
 #inputFunc(ivList2, pokemon2)
 
 # check if either of the iv lists matches max IV
-for testRuns in range(3):
+for testRuns in range(4):
+    print(counter)
+    print("Going into breeding, pokemon 1's stats are", ivList1)
+    print("Going into breeding, pokemon 2's stats are", ivList2)
     while ivList1 != perfectList and ivList2 != perfectList:
         # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
         selectedIV = np.sort(random.sample(range(6), 3 if DK == "n" else 5)) # 3 if default, 5 with destiny knot
         notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
-
+        print(notSelectedIV)
 
         # this replaces values in ivList3 with a random choice from each index of ivList1 and ivList2 depending on the indices of selectedIV
         for j, val in enumerate(selectedIV):
@@ -88,12 +91,19 @@ for testRuns in range(3):
                 print("---------------------")
                 print("Chosen from list 2")
             print("Replaced stat", val+1, "with", ivList3[val])
-        
+
+        print("Going into breeding, pokemon 1's stats are", ivList1)
+        print("Going into breeding, pokemon 2's stats are", ivList2)
+
         # this replaces the value that was not replaced with a random integer between 0 and 31
         for k, notVal in enumerate(notSelectedIV):
+            if counter > 1: # first iteration works, second and onwards ivList3 points back to ivList2 so it replaces 1 step earlier
+                ivList2[notVal] = ivList3[notVal] 
             ivList3[notVal] = random.randint(0, 31)
-            print(ivList3[notVal])
-            print("Randomized number is", ivList3[notVal])
+            #print(ivList3[notVal])
+            print("Randomized number is", ivList3[notVal]," going into stat", notVal+1)
+            print("Going into breeding, pokemon 1's stats are", ivList1)
+            print("Going into breeding, pokemon 2's stats are", ivList2)
 
         print("First pokemon's stats are ", ivList1)
         print("Second pokemon's stats are ", ivList2)
@@ -117,21 +127,23 @@ for testRuns in range(3):
                     if ivList3[i] > ivList2[i] or ivList3[i] > ivList1[i]:
                         lowerNum = min(ivList1[i], ivList2[i])
                         if lowerNum == ivList1[i]:
-                            ivList1 = ivList3
+                            ivList1 = ivList3.copy()
                             print("Replaced first pokemon")
                             break
                         else:
-                            ivList2 = ivList3
+                            ivList2 = ivList3.copy()
                             print("Replaced second pokemon")
                             break
                 
 
             # if the child 31s are bigger than a parent's, then replace 
             if perfCount(childPerfCount, ivList3) > perfCount(parent1PerfCount, ivList1):
-                ivList1 = ivList3
+                ivList1 = ivList3.copy()  # create a copy instead of replacing or else it'll equal to each other before even initializing
+                print("Replaced pokemon 1's stats")
 
             if perfCount(childPerfCount, ivList3) > perfCount(parent2PerfCount, ivList2):
-                ivList2 = ivList3
+                ivList2 = ivList3.copy() # create a copy instead of replacing or else it'll equal to each other before even initializing
+                print("Replaced pokemon 2's stats")
 
             print("New Stats")
             print("This is pokemon 1's stats", ivList1)
@@ -139,8 +151,6 @@ for testRuns in range(3):
             print("--------------------------------------------------")
 
             counter += 1
-            print(counter)
             break
 
-print("Congrats! It took ", counter,"number of eggs")
-
+print("Congrats! It took ", counter-1,"number of eggs")
