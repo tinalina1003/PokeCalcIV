@@ -95,6 +95,8 @@ while ivList1 != perfectList and ivList2 != perfectList:
 
         if perfCount(childPerfCount, ivList3) == perfCount(parent2PerfCount, ivList2) and perfCount(parent1PerfCount, ivList1):
             for i in range(len(ivList3)):
+                if ivList1[i] != 0 and ivList2[i] != 0:
+                    break
                 if ivList3[i] > ivList2[i] or ivList3[i] > ivList1[i]:
                     lowerNum = min(ivList1[i], ivList2[i])
                     if lowerNum == ivList1[i]:

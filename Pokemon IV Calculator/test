@@ -1,9 +1,11 @@
 
 
+"""
+elements [0, 2, 3, 4, 5] passed down
 
-list1 = [0, 31, 31, 31, 31, 31]
-list2 = [31, 26, 31, 31, 31, 31]
-list3 = [26, 31, 31, 31, 31, 31]
+list1 = [31, 29, 31, 31, 31, 31]
+list2 = [31, 0, 31, 31, 31, 31]
+list3 = [31, 29, 31, 31, 31, 31]
 
 list1Count = 0
 list2Count = 0
@@ -25,6 +27,9 @@ thirtyoneCount(list3)
 if thirtyoneCount(list3) == thirtyoneCount(list2) and thirtyoneCount(list1):
 #    print(thirtyoneCount(list3))
     for i in range(len(list3)):
+        if list1[i] != 0 and list2[i] != 0:
+            print("No replacements")
+            break
         if list3[i] > list2[i] or list3[i] > list1[i]:
             print(i)
             print(list3[i])
@@ -43,7 +48,7 @@ print(list1)
 print(list2)
 
 
-"""
+
 list1 = [0, 31, 31, 31, 31, 31]
 list2 = [31, 26, 31, 31, 31, 31]
 list3 = [26, 31, 31, 31, 31, 31]
@@ -54,5 +59,47 @@ if list3[i] > list2[i] or list3[i] > list1[i]: this one checks True/False or Tru
 
 if list3[i] > list2[i] or list1[i]: this checks if list3's ith number is greater than list2's ith number or list1's ith number and if it's bigger than one of them, it'll be true
     26 > 31 or 0: This is also true because 26 > 0
+
+"""
+import  random
+import numpy as np
+
+DK = 5
+
+ivList1 = [31, 29, 31, 31, 31, 31]
+ivList2 = [31, 31, 29, 31, 31, 31]
+ivList3 = [0, 0, 0, 0, 0, 0]
+perfectList = [31,31,31,31,31,31]
+
+while ivList1 != perfectList and ivList2 != perfectList:
+    # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
+    selectedIV = np.sort(random.sample(range(6), 3 if DK == "n" else 5)) # 3 if default, 5 with destiny knot
+    print(selectedIV)
+    notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
+    print(notSelectedIV)
+
+    print("Elements", selectedIV, "are passed down to offspring") # sort to make it easier to look at elements
+
+    ivList3 = [ivList1[selectedIV[0]], ivList1[selectedIV[1]], ivList1[selectedIV[2]],
+            ivList2[selectedIV[0]], ivList2[selectedIV[1]], ivList2[selectedIV[2]]] # pokemon 3 array
+
+    for i in range(len(notSelectedIV)):
+        ivList3[notSelectedIV[i]] = random.randint(0, 31)
+
+
+
+
+    print("First pokemon's stats are ", ivList1)
+    print("Second pokemon's stats are ", ivList2)
+    print("The child pokemon's stats are ", ivList3)
+    break
+
+
+"""
+selectedIV = [0, 1, 2, 3, 5]
+ivList3 = [ivList1[selectedIV[0]], ivList1[selectedIV[1]], ivList1[selectedIV[2]],ivList2[selectedIV[0]], ivList2[selectedIV[1]], ivList2[selectedIV[2]]]
+ivList3 = [ivList1[0]             , ivList1[1]             , ivList1[2]             ,ivList2[0]            , ivList2[1]            , ivList2[2]            ]
+ivList3 = [31, 29, 31, 31, 0, 31]
+
 
 """
