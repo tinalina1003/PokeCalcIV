@@ -103,7 +103,7 @@ while ivList1 != perfectList and ivList2 != perfectList:
     print(ivList1)  
     print(ivList2)
     print(ivList3)  
-    break
+ 
 
 """
     # gotta make this at the same time as the list
