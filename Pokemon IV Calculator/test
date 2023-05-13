@@ -89,18 +89,19 @@ while ivList1 != perfectList and ivList2 != perfectList:
                  
                 ]""" # pokemon 3 array
     
-    testList = [ 11, 12, 13, 14]
-    testList2 = [ 1, 2, 3, 4]
-    notIndex = [3]
+    notIndex = [1, 3]
 
-    for i, vals in enumerate(testList2):  
-        vals = testList[i]
+#    for i, vals in enumerate(ivList2):  
+#        vals = ivList1[i]
 
-    for j, notVal in enumerate(notIndex):
-        testList[j+notVal] = testList2[notVal]
 
-    print(testList)  
-    print(testList2)  
+    for j, notVal in enumerate(selectedIV):
+        ivList1[notVal] = ivList2[notVal]
+        print("Replaced # ", notVal+1)
+        
+
+    print(ivList1)  
+    print(ivList2)  
     break
 
 """
