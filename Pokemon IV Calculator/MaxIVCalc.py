@@ -64,8 +64,8 @@ while destinyKnot == False:
 inputFunc(ivList1, pokemon1)
 inputFunc(ivList2, pokemon2)
 
-print(ivList1)
-print(ivList2)
+"""print(ivList1)
+print(ivList2)"""
 
 
 # check if either of the iv lists matches max IV
@@ -93,6 +93,21 @@ while ivList1 != perfectList and ivList2 != perfectList:
         perfCount(parent2PerfCount, ivList2)
         perfCount(childPerfCount, ivList3)
 
+        if perfCount(childPerfCount, ivList3) == perfCount(parent2PerfCount, ivList2) and perfCount(parent1PerfCount, ivList1):
+            for i in range(len(ivList3)):
+                if ivList3[i] > ivList2[i] or ivList3[i] > ivList1[i]:
+                    lowerNum = min(ivList1[i], ivList2[i])
+                    if lowerNum == ivList1[i]:
+                        ivList1 = ivList3
+                        print("Replaced first pokemon")
+                        break
+                    else:
+                        ivList2 = ivList3
+                        print("Replaced second pokemon")
+                        break
+            
+
+
         if perfCount(childPerfCount, ivList3) > perfCount(parent1PerfCount, ivList1):
             ivList1 = ivList3
 
@@ -102,6 +117,7 @@ while ivList1 != perfectList and ivList2 != perfectList:
         print("New Stats")
         print("This is pokemon 1's stats", ivList1)
         print("This is pokemon 2's stats", ivList2)
+        print("--------------------------------------------------")
 
         counter += 1
 

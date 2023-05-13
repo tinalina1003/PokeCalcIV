@@ -4,9 +4,26 @@ do you have destiny knot
 
 input current IVs
 
+create array of (31, 31, 31, 31, 31, 31)
+while my stats is that array, randomly generate number between 0-31
+
 randomize number between 0-31 and replace values depending if you have destiny knot or not
+if the counter for # of 31's are the same, check each index to see if it's greater than the parent's ie) 31 > 0.. so replace with that
 
 do this until you get 6 IVs
 
 print output of how many eggs you need to hatch
 
+
+list1 = [5, 31, 31, 31, 31, 31]
+list2 = [5, 31, 31, 31, 31, 31]
+list3 = [31, 28, 31, 31, 31, 31]
+
+comparing each index in each list...
+
+if perfCount(childPerfCount, ivList3) == perfCount(parent1PerfCount, ivList1)
+	for i in list3:
+		for j in list 2:
+			for k in list 3:
+				if i > j:
+					list1 = list3
