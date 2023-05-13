@@ -87,16 +87,18 @@ while ivList1 != perfectList and ivList2 != perfectList:
                 random.choice((ivList1[selectedIV[4]], ivList2[selectedIV[4]])),  
                 ] # pokemon 3 array
 
+    # gotta make this at the same time as the list
     for i in range(len(notSelectedIV)):
         ivList3[notSelectedIV[i]] = random.randint(0, 31)
 
-    for i, iv in enumerate(ivList3):
+    for i, iv in enumerate(ivList3): # i is the index and iv is the actual items in the list
         if iv == ivList1[selectedIV[i]]:
             print(f"IV {i+1}: {iv} (from ivList1)")
         else:
             print(f"IV {i+1}: {iv} (from ivList2)")
 
-
+    print(notSelectedIV)
+    print(len(notSelectedIV))
     print("First pokemon's stats are ", ivList1)
     print("Second pokemon's stats are ", ivList2)
     print("The child pokemon's stats are ", ivList3)

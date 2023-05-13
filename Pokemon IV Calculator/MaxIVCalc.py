@@ -77,16 +77,36 @@ while ivList1 != perfectList and ivList2 != perfectList:
     print("Elements", np.sort(selectedIV), "are passed down to offspring") # sort to make it easier to look at elements
 
 
-    ivList3 = [ivList1[selectedIV[0]], ivList1[selectedIV[1]], ivList1[selectedIV[2]],
-            ivList2[selectedIV[0]], ivList2[selectedIV[1]], ivList2[selectedIV[2]]] # pokemon 3 array
+    ivList3 = [ random.choice((ivList1[selectedIV[0]], ivList2[selectedIV[0]])), 
+                random.choice((ivList1[selectedIV[1]], ivList2[selectedIV[1]])),
+                random.choice((ivList1[selectedIV[2]], ivList2[selectedIV[2]])),
+                random.choice((ivList1[selectedIV[3]], ivList2[selectedIV[3]])),
+                random.choice((ivList1[selectedIV[4]], ivList2[selectedIV[4]])),  
+                ] # pokemon 3 array
+    
+    for i, iv in enumerate(ivList3): # i is the index and iv is the actual items in the list
+        if iv == ivList1[selectedIV[i]]:
+            print(f"IV {i+1}: {iv} (from ivList1)")
+        else:
+            print(f"IV {i+1}: {iv} (from ivList2)")
 
+    print(notSelectedIV)
+    print(len(notSelectedIV))
+#    print("First pokemon's stats are ", ivList1)
+#    print("Second pokemon's stats are ", ivList2)
+#    print("The child pokemon's stats are ", ivList3)
+    break
+"""
+    # gotta make this at the same time as the list
     for i in range(len(notSelectedIV)):
         ivList3[notSelectedIV[i]] = random.randint(0, 31)
 
-    print("The child pokemon's stats are ", ivList3)
+
+   print("The child pokemon's stats are ", ivList3)
 
     if ivList3 == perfectList:
         break
+
     else:
         ###### MAKE IT SO THAT THE CHILD COUNT OF 31'S WILL REPLACE THAT OF PARENTS ####
         perfCount(parent1PerfCount, ivList1)
@@ -123,5 +143,5 @@ while ivList1 != perfectList and ivList2 != perfectList:
 
         counter += 1
 
-print("Congrats! It took ", counter,"number of eggs")    
+print("Congrats! It took ", counter,"number of eggs")   """ 
 
