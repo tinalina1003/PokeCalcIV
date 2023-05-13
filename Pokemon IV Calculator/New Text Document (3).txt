@@ -14,16 +14,9 @@ do this until you get 6 IVs
 
 print output of how many eggs you need to hatch
 
+add some more attributes
+gender
+shiny
+etc
 
-list1 = [5, 31, 31, 31, 31, 31]
-list2 = [5, 31, 31, 31, 31, 31]
-list3 = [31, 28, 31, 31, 31, 31]
-
-comparing each index in each list...
-
-if perfCount(childPerfCount, ivList3) == perfCount(parent1PerfCount, ivList1)
-	for i in list3:
-		for j in list 2:
-			for k in list 3:
-				if i > j:
-					list1 = list3
+make it output the object with it's attributes
