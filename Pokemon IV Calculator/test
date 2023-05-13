@@ -66,36 +66,53 @@ import numpy as np
 
 DK = 5
 
-ivList1 = [31, 29, 31, 31, 31, 31]
+ivList1 = [1, 2, 3, 4, 5, 6]
+#ivList1 = [31, 29, 31, 31, 31, 31]
 ivList2 = [31, 31, 29, 31, 31, 31]
 ivList3 = [0, 0, 0, 0, 0, 0]
 perfectList = [31,31,31,31,31,31]
 
 while ivList1 != perfectList and ivList2 != perfectList:
     # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
-    selectedIV = np.sort(random.sample(range(6), 3 if DK == "n" else 5)) # 3 if default, 5 with destiny knot
+    selectedIV = np.sort(random.sample(range(6), 3 if DK == "n" else 5)).tolist() # 3 if default, 5 with destiny knot
     print(selectedIV)
     notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
-    print(notSelectedIV)
+    print("did not select " ,notSelectedIV)
 
     print("Elements", selectedIV, "are passed down to offspring") # sort to make it easier to look at elements
-
-    ivList3 = [ random.choice((ivList1[selectedIV[0]], ivList2[selectedIV[0]])), 
+    print(type(selectedIV))
+    """ivList3 = [ random.choice((ivList1[selectedIV[0]], ivList2[selectedIV[0]])), 
                 random.choice((ivList1[selectedIV[1]], ivList2[selectedIV[1]])),
                 random.choice((ivList1[selectedIV[2]], ivList2[selectedIV[2]])),
                 random.choice((ivList1[selectedIV[3]], ivList2[selectedIV[3]])),
-                random.choice((ivList1[selectedIV[4]], ivList2[selectedIV[4]])),  
-                ] # pokemon 3 array
+                random.choice((ivList1[selectedIV[4]], ivList2[selectedIV[4]])),
+                 
+                ]""" # pokemon 3 array
+    
+    testList = [ 11, 12, 13, 14]
+    testList2 = [ 1, 2, 3, 4]
+    notIndex = [3]
 
+    for i, vals in enumerate(testList2):  
+        vals = testList[i]
+
+    for j, notVal in enumerate(notIndex):
+        testList[j+notVal] = testList2[notVal]
+
+    print(testList)  
+    print(testList2)  
+    break
+
+"""
     # gotta make this at the same time as the list
-    for i in range(len(notSelectedIV)):
-        ivList3[notSelectedIV[i]] = random.randint(0, 31)
-
-    for i, iv in enumerate(ivList3): # i is the index and iv is the actual items in the list
-        if iv == ivList1[selectedIV[i]]:
-            print(f"IV {i+1}: {iv} (from ivList1)")
+    for i, iv in enumerate(ivList3):
+        if i in selectedIV:
+            if iv == ivList1[selectedIV.index(i)]:
+                print(f"IV {i+1}: {iv} (from ivList1)")
+            else:
+                print(f"IV {i+1}: {iv} (from ivList2)")
         else:
-            print(f"IV {i+1}: {iv} (from ivList2)")
+            print(f"IV {i+1}: {iv}")
 
     print(notSelectedIV)
     print(len(notSelectedIV))
@@ -105,7 +122,7 @@ while ivList1 != perfectList and ivList2 != perfectList:
     break
 
 
-"""
+
 selectedIV = [0, 1, 2, 3, 5]
 ivList3 = [ivList1[selectedIV[0]], ivList1[selectedIV[1]], ivList1[selectedIV[2]],ivList2[selectedIV[0]], ivList2[selectedIV[1]], ivList2[selectedIV[2]]]
 ivList3 = [ivList1[0]             , ivList1[1]             , ivList1[2]             ,ivList2[0]            , ivList2[1]            , ivList2[2]            ]
