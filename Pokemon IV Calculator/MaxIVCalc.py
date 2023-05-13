@@ -1,5 +1,6 @@
 import numpy as np
 import random
+import matplotlib.pyplot as plt
 
 ################## DEFINE STUFF ############################
 # used for testing
@@ -32,7 +33,7 @@ def perfCount(perfectCounter, ivList):
 
 
 class pokemon:
-    def __init__(self, ivList): # assign each element in the list/array as an attribute for the class
+    def __init__(self, ivList, name): # assign each element in the list/array as an attribute for the class
         self.HP, self.ATK, self.DEF, self.SPA, self.SPD, self.SPE = ivList
 
 ivList1 = stats1.tolist() #pokemon 1
@@ -71,86 +72,91 @@ while destinyKnot == False:
 #inputFunc(ivList2, pokemon2)
 
 # check if either of the iv lists matches max IV
-for testRuns in range(4):
-    print(counter)
+#for testRuns in range(2): # will use later
+#    print(counter)
     print("Going into breeding, pokemon 1's stats are", ivList1)
     print("Going into breeding, pokemon 2's stats are", ivList2)
-    while ivList1 != perfectList and ivList2 != perfectList:
-        # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
-        selectedIV = np.sort(random.sample(range(6), 3 if DK == "n" else 5)) # 3 if default, 5 with destiny knot
-        notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
-        print(notSelectedIV)
+while ivList1 != perfectList and ivList2 != perfectList:
+    
+    if perfCount(parent1PerfCount, ivList1) < 4  or perfCount(parent2PerfCount, ivList2) < 4:
+        DK = False
+    else:
+        DK = True
 
-        # this replaces values in ivList3 with a random choice from each index of ivList1 and ivList2 depending on the indices of selectedIV
-        for j, val in enumerate(selectedIV):
-            ivList3[val] = random.choice((ivList1[val],ivList2[val]))
-            if ivList3[val] == ivList1[val]:
-                print("---------------------")
-                print("Chosen from list 1")
-            else:
-                print("---------------------")
-                print("Chosen from list 2")
-            print("Replaced stat", val+1, "with", ivList3[val])
+    # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
+    selectedIV = np.sort(random.sample(range(6), 3 if DK == "n" else 5)) # 3 if default, 5 with destiny knot
+    notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
+#    print(notSelectedIV)
 
-        print("Going into breeding, pokemon 1's stats are", ivList1)
-        print("Going into breeding, pokemon 2's stats are", ivList2)
+    # this replaces values in ivList3 with a random choice from each index of ivList1 and ivList2 depending on the indices of selectedIV
+    for j, val in enumerate(selectedIV):
+        ivList3[val] = random.choice((ivList1[val],ivList2[val]))
+        #if ivList3[val] == ivList1[val]:
+        #    print("---------------------")
+        #    print("Chosen from list 1")
+        #else:
+        #    print("---------------------")
+        #    print("Chosen from list 2")
+        #print("Replaced stat", val+1, "with", ivList3[val])
 
-        # this replaces the value that was not replaced with a random integer between 0 and 31
-        for k, notVal in enumerate(notSelectedIV):
-            if counter > 1: # first iteration works, second and onwards ivList3 points back to ivList2 so it replaces 1 step earlier
-                ivList2[notVal] = ivList3[notVal] 
-            ivList3[notVal] = random.randint(0, 31)
-            #print(ivList3[notVal])
-            print("Randomized number is", ivList3[notVal]," going into stat", notVal+1)
-            print("Going into breeding, pokemon 1's stats are", ivList1)
-            print("Going into breeding, pokemon 2's stats are", ivList2)
+    #print("Going into breeding, pokemon 1's stats are", ivList1)
+    #print("Going into breeding, pokemon 2's stats are", ivList2)
 
-        print("First pokemon's stats are ", ivList1)
-        print("Second pokemon's stats are ", ivList2)
-        print("The child pokemon's stats are ", ivList3)
+    # this replaces the value that was not replaced with a random integer between 0 and 31
+    for k, notVal in enumerate(notSelectedIV):
+        ivList3[notVal] = random.randint(0, 31)
+        #print(ivList3[notVal])
+        print("Randomized number is", ivList3[notVal]," going into stat", notVal+1)
+        #print("Going into breeding, pokemon 1's stats are", ivList1)
+        #print("Going into breeding, pokemon 2's stats are", ivList2)
 
-        if ivList3 == perfectList:
-            break
+    #print("First pokemon's stats are ", ivList1)
+    #print("Second pokemon's stats are ", ivList2)
+    #print("The child pokemon's stats are ", ivList3)
 
-        else:
-            ###### MAKE IT SO THAT THE CHILD COUNT OF 31'S WILL REPLACE THAT OF PARENTS ####
-            perfCount(parent1PerfCount, ivList1)
-            perfCount(parent2PerfCount, ivList2)
-            perfCount(childPerfCount, ivList3)
+    if ivList3 == perfectList:
+        break
+
+    else:
+        ###### MAKE IT SO THAT THE CHILD COUNT OF 31'S WILL REPLACE THAT OF PARENTS ####
+        perfCount(parent1PerfCount, ivList1)
+        perfCount(parent2PerfCount, ivList2)
+        perfCount(childPerfCount, ivList3)
 
 
-            # if the 31 counts are the same, then choose the list with the lower value of index to replace
-            if perfCount(childPerfCount, ivList3) == perfCount(parent2PerfCount, ivList2) and perfCount(parent1PerfCount, ivList1):
-                for i in range(len(ivList3)):
-                    if ivList1[i] != 0 and ivList2[i] != 0:
+        # if the 31 counts are the same, then choose the list with the lower value of index to replace
+        if perfCount(childPerfCount, ivList3) == perfCount(parent2PerfCount, ivList2) and perfCount(parent1PerfCount, ivList1):
+            for i in range(len(ivList3)):
+                if ivList1[i] != 0 and ivList2[i] != 0:
+                    break
+                if ivList3[i] > ivList2[i] or ivList3[i] > ivList1[i]:
+                    lowerNum = min(ivList1[i], ivList2[i])
+                    if lowerNum == ivList1[i]:
+                        ivList1 = ivList3.copy()
+                        print("Replaced first pokemon")
                         break
-                    if ivList3[i] > ivList2[i] or ivList3[i] > ivList1[i]:
-                        lowerNum = min(ivList1[i], ivList2[i])
-                        if lowerNum == ivList1[i]:
-                            ivList1 = ivList3.copy()
-                            print("Replaced first pokemon")
-                            break
-                        else:
-                            ivList2 = ivList3.copy()
-                            print("Replaced second pokemon")
-                            break
-                
+                    else:
+                        ivList2 = ivList3.copy()
+                        print("Replaced second pokemon")
+                        break
+            
 
-            # if the child 31s are bigger than a parent's, then replace 
-            if perfCount(childPerfCount, ivList3) > perfCount(parent1PerfCount, ivList1):
-                ivList1 = ivList3.copy()  # create a copy instead of replacing or else it'll equal to each other before even initializing
-                print("Replaced pokemon 1's stats")
+        # if the child 31s are bigger than a parent's, then replace 
+        if perfCount(childPerfCount, ivList3) > perfCount(parent1PerfCount, ivList1):
+            ivList1 = ivList3.copy()  # create a copy instead of replacing or else it'll equal to each other before even initializing
+            print("Replaced pokemon 1's stats")
 
-            if perfCount(childPerfCount, ivList3) > perfCount(parent2PerfCount, ivList2):
-                ivList2 = ivList3.copy() # create a copy instead of replacing or else it'll equal to each other before even initializing
-                print("Replaced pokemon 2's stats")
+        if perfCount(childPerfCount, ivList3) > perfCount(parent2PerfCount, ivList2):
+            ivList2 = ivList3.copy() # create a copy instead of replacing or else it'll equal to each other before even initializing
+            print("Replaced pokemon 2's stats")
 
-            print("New Stats")
-            print("This is pokemon 1's stats", ivList1)
-            print("This is pokemon 2's stats", ivList2)
-            print("--------------------------------------------------")
+        print("New Stats")
+        print("This is pokemon 1's stats", ivList1)
+        print("This is pokemon 2's stats", ivList2)
+        print("--------------------------------------------------")
 
-            counter += 1
-            break
+        counter += 1
+#        break
 
-print("Congrats! It took ", counter-1,"number of eggs")
+print("Congrats! The child pokemon has max IV! It took ", counter-1,"number of eggs")
+
