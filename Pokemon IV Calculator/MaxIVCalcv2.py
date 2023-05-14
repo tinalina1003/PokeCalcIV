@@ -8,6 +8,94 @@ data = np.loadtxt('E:/Python Projects/Pokemon IV Calculator/testStats.txt', dtyp
 stats1 = data[:, 0]
 stats2 = data[:, 1]
 
+"""
+startMaleStats = dict([('HP', stats1[0]),
+                     ('ATK', stats1[1]),
+                     ('DEF', stats1[2]),
+                     ('SPA', stats1[3]),
+                     ('SPD', stats1[4]),
+                     ('SPE', stats1[5]),
+                     ('Gender', "Male")])
+
+startFemaleStats = dict([('HP', stats2[0]),
+                     ('ATK', stats2[1]),
+                     ('DEF', stats2[2]),
+                     ('SPA', stats2[3]),
+                     ('SPD', stats2[4]),
+                     ('SPE', stats2[5]),
+                     ('Gender', "Female")])
+"""
+
+startMaleStats = dict([('HP', 0),
+                     ('ATK', 0),
+                     ('DEF', 0),
+                     ('SPA', 0),
+                     ('SPD', 0),
+                     ('SPE', 0),
+                     ('Gender', "Male")])
+
+startFemaleStats = dict([('HP', 0),
+                     ('ATK', 0),
+                     ('DEF', 0),
+                     ('SPA', 0),
+                     ('SPD', 0),
+                     ('SPE', 0),
+                     ])
+
+
+for stat in startMaleStats.keys():
+    if stat == 'Gender':
+        continue
+    while True:
+        iv = input(f"Please input {stat} IV for male pokemon > ")
+        if iv == 'perfect':
+            startMaleStats[stat] = 31
+            break
+        elif iv in ['no good', 'decent', 'pretty good', 'very good', 'fantastic']:
+            startMaleStats[stat] = 0
+            break
+        else:
+            print("Invalid input. Please enter a valid IV")
+
+
+print(startMaleStats.values())
+
+class pokemon:
+    def __init__(self, dictionary):
+        self.stats = dictionary
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+"""
 def inputFunc(inputList, pokeParents):
     for inputVals in pokeParents:
         while True:
@@ -36,6 +124,12 @@ class pokemon:
     def __init__(self, ivList, gender): # assign each element in the list/array as an attribute for the class
         self.HP, self.ATK, self.DEF, self.SPA, self.SPD, self.SPE = ivList
         self.gender = gender
+
+
+
+
+
+
 
 ivList1 = stats1.tolist() #pokemon 1
 ivList2 = stats2.tolist() #pokemon 2
@@ -179,3 +273,4 @@ while ivList1 != perfectList and ivList2 != perfectList:
 print("Congrats! The child pokemon has max IV! It took ", counter-1,"number of eggs")
 print(ivList3)
 print(offspringStats.gender)
+"""
