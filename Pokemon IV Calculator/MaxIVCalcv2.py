@@ -8,14 +8,14 @@ data = np.loadtxt('E:/Python Projects/Pokemon IV Calculator/testStats.txt', dtyp
 stats1 = data[:, 0]
 stats2 = data[:, 1]
 
-"""
+
 startMaleStats = dict([('HP', stats1[0]),
                      ('ATK', stats1[1]),
                      ('DEF', stats1[2]),
                      ('SPA', stats1[3]),
                      ('SPD', stats1[4]),
                      ('SPE', stats1[5]),
-                     ('Gender', "Male")])
+                     ])
 
 startFemaleStats = dict([('HP', stats2[0]),
                      ('ATK', stats2[1]),
@@ -23,9 +23,25 @@ startFemaleStats = dict([('HP', stats2[0]),
                      ('SPA', stats2[3]),
                      ('SPD', stats2[4]),
                      ('SPE', stats2[5]),
-                     ('Gender', "Female")])
-"""
+                     ])
 
+offspringStats = dict([('HP', 0),
+                     ('ATK', 0),
+                     ('DEF', 0),
+                     ('SPA', 0),
+                     ('SPD', 0),
+                     ('SPE', 0),
+                     ])
+
+perfectStats = dict([('HP', 31),
+                     ('ATK', 31),
+                     ('DEF', 31),
+                     ('SPA', 31),
+                     ('SPD', 31),
+                     ('SPE', 31),
+                     ])
+
+"""
 startMaleStats = dict([('HP', 0),
                      ('ATK', 0),
                      ('DEF', 0),
@@ -40,39 +56,70 @@ startFemaleStats = dict([('HP', 0),
                      ('SPA', 0),
                      ('SPD', 0),
                      ('SPE', 0),
-                     ])
+                     ('Gender', "Male")])
 
 
 for stat in startMaleStats.keys():
     if stat == 'Gender':
         continue
     while True:
-        iv = input(f"Please input {stat} IV for male pokemon > ")
-        if iv == 'perfect':
+        maleIV = input(f"Please input {stat} IV for male pokemon > ")
+
+        if maleIV == 'perfect':
             startMaleStats[stat] = 31
             break
-        elif iv in ['no good', 'decent', 'pretty good', 'very good', 'fantastic']:
+        elif maleIV in ['no good', 'decent', 'pretty good', 'very good', 'fantastic']:
             startMaleStats[stat] = 0
             break
         else:
             print("Invalid input. Please enter a valid IV")
 
+for stat in startFemaleStats.keys():
+    if stat == 'Gender':
+        continue
+    while True:
+        femaleIV = input(f"Please input {stat} IV for female pokemon > ")
 
-print(startMaleStats.values())
+        if femaleIV == 'perfect':
+            startFemaleStats[stat] = 31
+            break
+        elif femaleIV in ['no good', 'decent', 'pretty good', 'very good', 'fantastic']:
+            startFemaleStats[stat] = 0
+            break
+        else:
+            print("Invalid input. Please enter a valid IV")
 
-class pokemon:
-    def __init__(self, dictionary):
-        self.stats = dictionary
+"""
+
+destinyKnot = False
+
+while destinyKnot == False:
+    DK = input("Do you have destiny knot? [y/n] ")
+    if DK == "y":
+        destinyKnot = True
+
+    elif DK == "n":
+        destinyKnot = True
+    else:
+        print("Please input a correct input")
 
 
+for iv in offspringStats.keys():
+    if iv != 'Gender':
+        while iv != 31:
+  
+            selectedIV = np.sort(random.sample(range(6), 3 if DK == "n" else 5))
+            notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV)))
 
+            for i in selectedIV:
+                key = random.choice(list(startMaleStats.keys(), startFemaleStats.keys()))
 
+            break
 
-
-
-
-
-
+        break
+       
+print(selectedIV)
+print(offspringStats.values())
 
 
 
