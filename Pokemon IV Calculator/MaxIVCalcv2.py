@@ -13,6 +13,18 @@ class pokemon(object):
     def __init__ (self, stats):
         self.stats = stats
 
+def perfectIVCount(list):
+    perfectCounter = 0
+    for iv in list:
+        if iv == 31:
+            perfectCounter += 1
+    return(perfectCounter)
+
+def lowerNum(list1, list2, list3):
+    if list3 > list1 and list3 > list2:
+
+        minNum = min(list1, list2)
+    return(minNum)
 
 startMaleStats = {'HP': stats1[0],
                      'ATK': stats1[1],
@@ -61,7 +73,7 @@ perfectIVs = list(perfectStats.stats.values())
 destinyKnot = False
 
 
-"""
+
 while destinyKnot == False:
     DK = input('Do you have destiny knot? [y/n] > ')
     if DK == 'y':
@@ -72,120 +84,106 @@ while destinyKnot == False:
         break
     else:
         print('Please input a valid input')
-"""
 
 
 
+for i in range(10):
+    while offspringIVs != perfectIVs:
 
-while offspringIVs != perfectIVs:
-    
-    selectedIV = np.sort(random.sample(range(6), 5)) # 3 if default, 5 with destiny knot
-    notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
-    print('stats index', selectedIV, 'passed down')
-    print('stat index', notSelectedIV, 'randomized')
+        eggCount = 0
 
-    print('Going into breeding, male IVs are', maleIVs)
-    print('Going into breeding, female IVs are',femaleIVs)
-    print('Going into breeding, offspring IVs are',offspringIVs)
+        if perfectIVCount(maleIVs) < 4 and perfectIVCount(femaleIVs) < 4:
+            DK = 'n'
 
-    for selected, val in enumerate(selectedIV):
-        offspringIVs[val] = random.choice((maleIVs[val],femaleIVs[val]))
-        if offspringIVs[val] == maleIVs[val]:
-            print('-----------------------------------')
-            print('Chosen from male IVs')
-        else:
-            print('-----------------------------------')
-            print('Chosen from female IVs')
+        selectedIV = np.sort(random.sample(range(6), 3 if DK == 'n' else 5)) # 3 if default, 5 with destiny knot
+        notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
+        print('stats index', selectedIV, 'passed down')
+        print('stat index', notSelectedIV, 'randomized')
+
+        print('Going into breeding, male IVs are', maleIVs)
+        print('Going into breeding, female IVs are',femaleIVs)
+        #print('Going into breeding, offspring IVs are',offspringIVs)
         print('-----------------------------------')
-        print("Replaced stat", val+1, "with", offspringIVs[val])
+        for selected, val in enumerate(selectedIV):
+            offspringIVs[val] = random.choice((maleIVs[val],femaleIVs[val]))
+            if offspringIVs[val] == maleIVs[val]:
+                print('Chosen from male IVs')
+                
+            else:
+                print('Chosen from female IVs')
+                
+            
+            print("Replaced stat", val+1, "with", offspringIVs[val])
+            print('-----------------------------------')
+        
+        for notSelected, notVal in enumerate(notSelectedIV):
+            offspringIVs[notVal] = random.randint(0, 31)
+            print('Randomized number is', offspringIVs[notVal], "going into stat", notVal+1)
+
+        #print('Going into breeding, male IVs are', maleIVs)
+        #print('Going into breeding, female IVs are',femaleIVs)
+        print('Resulting offspring IVs are',offspringIVs)
+        
+
+    #    # replace lists
+    #    if perfectIVCount(offspringIVs) == perfectIVCount(maleIVs) and perfectIVCount(offspringIVs) == perfectIVCount(femaleIVs):
+    #        for thirtyoneCount, thirtyone in enumerate(offspringIVs):
+    #            if maleIVs[thirtyoneCount] != 0 and femaleIVs[thirtyoneCount] != 0:
+    #                break
+    #            elif offspringIVs[thirtyoneCount] > maleIVs[thirtyoneCount] and offspringIVs[thirtyoneCount] > femaleIVs[thirtyoneCount]:
+    #                lowerNum = min(maleIVs[thirtyoneCount], femaleIVs[thirtyoneCount])
+    #                if lowerNum == maleIVs[thirtyoneCount]:
+    #                    maleIVs = offspringIVs
+    #                    print("Replaced male pokemon")
+    #                else:
+    #                    femaleIVs = offspringIVs
+    #                    print("Replaced female pokemon")
 
 
-    for notSelected, notVal in enumerate(notSelectedIV):
-        offspringIVs[notVal] = random.randint(0, 31)
-        print('Randomized number is', offspringIVs[notVal], "going into stat", notVal+1)
+        if perfectIVCount(offspringIVs) > perfectIVCount(maleIVs):
+            maleIVs = offspringIVs # these are lists
+            print("Replaced male pokemon")
 
-    print('Going into breeding, male IVs are', maleIVs)
-    print('Going into breeding, female IVs are',femaleIVs)
-    print('Going into breeding, offspring IVs are',offspringIVs)
-    break
+        elif perfectIVCount(offspringIVs) > perfectIVCount(femaleIVs):
+            femaleIVs = offspringIVs
+            print("Replaced female pokemon")
+
+        print("Resulting Eggs are: ")
+        print('Male: ', maleIVs, ' and has', perfectIVCount(maleIVs), '31s')
+        print('Female: ', femaleIVs, ' and has', perfectIVCount(femaleIVs), '31s')
+        print('-----------------------------------')
+
+        eggCount += 1
+        break
+
+#print("Congrats! The child pokemon has max IV! It took ", eggCount-1,"number of eggs")
+#print(maleIVs)
+#print(femaleIVs)
+#print(offspringIVs)
+   
 
 
 
-
-
-"""for j, val in enumerate(selectedIV):
-        ivList3[val] = random.choice((ivList1[val],ivList2[val]))
-        #if ivList3[val] == ivList1[val]:
-        #    print("---------------------")
-        #    print("Chosen from list 1")
-        #else:
-        #    print("---------------------")
-        #    print("Chosen from list 2")
-        #print("Replaced stat", val+1, "with", ivList3[val])
-
-    #print("Going into breeding, pokemon 1's stats are", ivList1)
-    #print("Going into breeding, pokemon 2's stats are", ivList2)
-
-    # this replaces the value that was not replaced with a random integer between 0 and 31
-    for k, notVal in enumerate(notSelectedIV):
-        ivList3[notVal] = random.randint(0, 31)
-        #print(ivList3[notVal])
-        print("Randomized number is", ivList3[notVal]," going into stat", notVal+1)
-        #print("Going into breeding, pokemon 1's stats are", ivList1)
-        #print("Going into breeding, pokemon 2's stats are", ivList2)
+"""
+        # if the 31 counts are the same, then choose the list with the lower value of index to replace
+        if perfCount(childPerfCount, ivList3) == perfCount(parent2PerfCount, ivList2) and perfCount(parent1PerfCount, ivList1):
+            for i in range(len(ivList3)):
+                if ivList1[i] != 0 and ivList2[i] != 0:
+                    break
+                elif ivList3[i] > ivList2[i] or ivList3[i] > ivList1[i]:
+                    lowerNum = min(ivList1[i], ivList2[i])
+                    if lowerNum == ivList1[i]:
+                        ivList1 = ivList3.copy()
+                        print("Replaced male pokemon")
+                        break
+                    else:
+                        ivList2 = ivList3.copy()
+                        print("Replaced female pokemon")
+                        break
+            
 """
 
-
-
-
-
-
-
-
-
-
 """
-startFemaleStats = dict([('HP', stats2[0]),
-                     ('ATK', stats2[1]),
-                     ('DEF', stats2[2]),
-                     ('SPA', stats2[3]),
-                     ('SPD', stats2[4]),
-                     ('SPE', stats2[5]),
-                     ])
-
-offspringStats = dict([('HP', 0),
-                     ('ATK', 0),
-                     ('DEF', 0),
-                     ('SPA', 0),
-                     ('SPD', 0),
-                     ('SPE', 0),
-                     ])
-
-perfectStats = dict([('HP', 31),
-                     ('ATK', 31),
-                     ('DEF', 31),
-                     ('SPA', 31),
-                     ('SPD', 31),
-                     ('SPE', 31),
-                     ])
-
-
-startMaleStats = dict([('HP', 0),
-                     ('ATK', 0),
-                     ('DEF', 0),
-                     ('SPA', 0),
-                     ('SPD', 0),
-                     ('SPE', 0),
-                     ('Gender', "Male")])
-
-startFemaleStats = dict([('HP', 0),
-                     ('ATK', 0),
-                     ('DEF', 0),
-                     ('SPA', 0),
-                     ('SPD', 0),
-                     ('SPE', 0),
-                     ('Gender', "Male")])
-
 
 for stat in startMaleStats.keys():
     if stat == 'Gender':
