@@ -9,14 +9,142 @@ stats1 = data[:, 0]
 stats2 = data[:, 1]
 
 
-startMaleStats = dict([('HP', stats1[0]),
-                     ('ATK', stats1[1]),
-                     ('DEF', stats1[2]),
-                     ('SPA', stats1[3]),
-                     ('SPD', stats1[4]),
-                     ('SPE', stats1[5]),
-                     ])
+class pokemon(object):
+    def __init__ (self, stats):
+        self.stats = stats
 
+
+startMaleStats = {'HP': stats1[0],
+                     'ATK': stats1[1],
+                     'DEF': stats1[2],
+                     'SPA': stats1[3],
+                     'SPD': stats1[4],
+                     'SPE': stats1[5],
+                     }
+startFemaleStats = {'HP': stats2[0],
+                     'ATK': stats2[1],
+                     'DEF': stats2[2],
+                     'SPA': stats2[3],
+                     'SPD': stats2[4],
+                     'SPE': stats2[5],
+                     }
+
+offspringStats = {'HP': 0,
+                     'ATK': 0,
+                     'DEF': 0,
+                     'SPA': 0,
+                     'SPD': 0,
+                     'SPE': 0,
+                     }
+
+perfectStats = {'HP': 31,
+                     'ATK': 31,
+                     'DEF': 31,
+                     'SPA': 31,
+                     'SPD': 31,
+                     'SPE': 31,
+                     }
+
+# set methods as variables (think of methods as a return... returns something but you must set it to a variable before you can use it)
+maleAllStats = pokemon(startMaleStats)
+femaleAllStats = pokemon(startFemaleStats)
+offspringAllStats = pokemon(offspringStats)
+perfectStats = pokemon(perfectStats)
+
+# extract stat names and values of male and female
+statNames = list(perfectStats.stats.keys())
+maleIVs = list(maleAllStats.stats.values())
+femaleIVs = list(femaleAllStats.stats.values())
+offspringIVs = list(offspringAllStats.stats.values())
+perfectIVs = list(perfectStats.stats.values())
+
+destinyKnot = False
+
+
+"""
+while destinyKnot == False:
+    DK = input('Do you have destiny knot? [y/n] > ')
+    if DK == 'y':
+        destinyKnot == True
+        break
+    elif DK  =='n':
+        destinyKnot == True
+        break
+    else:
+        print('Please input a valid input')
+"""
+
+
+
+
+while offspringIVs != perfectIVs:
+    
+    selectedIV = np.sort(random.sample(range(6), 5)) # 3 if default, 5 with destiny knot
+    notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
+    print('stats index', selectedIV, 'passed down')
+    print('stat index', notSelectedIV, 'randomized')
+
+    print('Going into breeding, male IVs are', maleIVs)
+    print('Going into breeding, female IVs are',femaleIVs)
+    print('Going into breeding, offspring IVs are',offspringIVs)
+
+    for selected, val in enumerate(selectedIV):
+        offspringIVs[val] = random.choice((maleIVs[val],femaleIVs[val]))
+        if offspringIVs[val] == maleIVs[val]:
+            print('-----------------------------------')
+            print('Chosen from male IVs')
+        else:
+            print('-----------------------------------')
+            print('Chosen from female IVs')
+        print('-----------------------------------')
+        print("Replaced stat", val+1, "with", offspringIVs[val])
+
+
+    for notSelected, notVal in enumerate(notSelectedIV):
+        offspringIVs[notVal] = random.randint(0, 31)
+        print('Randomized number is', offspringIVs[notVal], "going into stat", notVal+1)
+
+    print('Going into breeding, male IVs are', maleIVs)
+    print('Going into breeding, female IVs are',femaleIVs)
+    print('Going into breeding, offspring IVs are',offspringIVs)
+    break
+
+
+
+
+
+"""for j, val in enumerate(selectedIV):
+        ivList3[val] = random.choice((ivList1[val],ivList2[val]))
+        #if ivList3[val] == ivList1[val]:
+        #    print("---------------------")
+        #    print("Chosen from list 1")
+        #else:
+        #    print("---------------------")
+        #    print("Chosen from list 2")
+        #print("Replaced stat", val+1, "with", ivList3[val])
+
+    #print("Going into breeding, pokemon 1's stats are", ivList1)
+    #print("Going into breeding, pokemon 2's stats are", ivList2)
+
+    # this replaces the value that was not replaced with a random integer between 0 and 31
+    for k, notVal in enumerate(notSelectedIV):
+        ivList3[notVal] = random.randint(0, 31)
+        #print(ivList3[notVal])
+        print("Randomized number is", ivList3[notVal]," going into stat", notVal+1)
+        #print("Going into breeding, pokemon 1's stats are", ivList1)
+        #print("Going into breeding, pokemon 2's stats are", ivList2)
+"""
+
+
+
+
+
+
+
+
+
+
+"""
 startFemaleStats = dict([('HP', stats2[0]),
                      ('ATK', stats2[1]),
                      ('DEF', stats2[2]),
@@ -41,7 +169,7 @@ perfectStats = dict([('HP', 31),
                      ('SPE', 31),
                      ])
 
-"""
+
 startMaleStats = dict([('HP', 0),
                      ('ATK', 0),
                      ('DEF', 0),
@@ -89,7 +217,7 @@ for stat in startFemaleStats.keys():
         else:
             print("Invalid input. Please enter a valid IV")
 
-"""
+
 
 destinyKnot = False
 
@@ -122,7 +250,7 @@ print(selectedIV)
 print(offspringStats.values())
 
 
-
+"""
 
 
 
