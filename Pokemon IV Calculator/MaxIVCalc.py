@@ -30,7 +30,6 @@ def genderFunction():
 
     return(genderVariable)
 
-print(genderFunction())
 
 startMaleStats = {'HP': stats1[0],
                      'ATK': stats1[1],
@@ -92,9 +91,8 @@ while destinyKnot == False:
         print('Please input a valid input')
 """
 
-
 #for i in range(3):
-while offspringIVs != perfectIVs:
+while offspringIVs != perfectIVs and maleIVs != perfectIVs and femaleIVs != perfectIVs:
 
     if perfectIVCount(maleIVs) < 4 and perfectIVCount(femaleIVs) < 4:
         DK = 'n'
@@ -191,8 +189,10 @@ while offspringIVs != perfectIVs:
 
     eggCount += 1
     
-
-print("Congrats! The child pokemon has max IV! It took ", eggCount,"number of eggs")
+if eggCount == 0:
+    print('You already have a max IV female pokemon!')
+else:
+    print("Congrats! The child pokemon has max IV! It took ", eggCount,"number of eggs")
 #print(maleIVs)
 #print(femaleIVs)
 #print(offspringIVs)
