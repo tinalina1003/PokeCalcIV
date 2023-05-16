@@ -1,147 +1,202 @@
 import numpy as np
 import random
+import matplotlib.pyplot as plt
 
 ################## DEFINE STUFF ############################
+# used for testing
+data = np.loadtxt('E:/Python Projects/Pokemon IV Calculator/testStats.txt', dtype = int)
+stats1 = data[:, 0]
+stats2 = data[:, 1]
 
-def inputFunc(inputList, pokeParents):
-    for inputVals in pokeParents:
-        while True:
-            pokeIV1 = input(inputVals)
 
-            if pokeIV1 == "perfect":
-                inputList.append(31) #appends to the different lists
-                break # break out of the while loop and goes to the next index
+class pokemon(object):
+    def __init__ (self, stats):
+        self.stats = stats
 
-            elif pokeIV1 in ["no good", "decent", "pretty good", "very good", "fantastic"]:
-                inputList.append(0) #appends to the different lists
-                break # break out of the while loop and goes to  the next index
 
-            else:
-                print("Please input a value IV") #this loop will continue forever on index inputVals until a valid input is received
-
-# a counter to count how many 31's are in each pokemon's IV list
-def perfCount(perfectCounter, ivList):
-    for stats in ivList:
-        if stats == 31:
+def perfectIVCount(list):
+    perfectCounter = 0
+    for iv in list:
+        if iv == 31:
             perfectCounter += 1
-    return perfectCounter
+    return(perfectCounter)
 
+def genderFunction():
+    genderVariable = random.randint(0, 1)
+    if genderVariable == 1:
+        genderVariable = 'Male'
+    elif genderVariable == 0:
+        genderVariable = 'Female'
 
-class pokemon:
-    def __init__(self, ivList): # assign each element in the list/array as an attribute for the class
-        self.HP, self.ATK, self.DEF, self.SPA, self.SPD, self.SPE = ivList
+    return(genderVariable)
 
-ivList1 = [] #pokemon 1
-ivList2 = [] #pokemon 2
-ivList3 = [0, 0, 0, 0, 0, 0] #initialize pokemon
-perfectList = [31, 31, 31, 31, 31, 31] # perfect IV list to check with
+print(genderFunction())
 
-counter =  0 # just counter things
-parent1PerfCount = 0 # parent 1's perfect IV count
-parent2PerfCount = 0 # parent 2's perfect IV count
-childPerfCount  = 0 # child's perfect IV count
+startMaleStats = {'HP': stats1[0],
+                     'ATK': stats1[1],
+                     'DEF': stats1[2],
+                     'SPA': stats1[3],
+                     'SPD': stats1[4],
+                     'SPE': stats1[5],
+                     'Gender': 'Male'}
+startFemaleStats = {'HP': stats2[0],
+                     'ATK': stats2[1],
+                     'DEF': stats2[2],
+                     'SPA': stats2[3],
+                     'SPD': stats2[4],
+                     'SPE': stats2[5],
+                     'Gender': 'Female'}
 
-pokemon1 = [f"Please input {stat} IV for first pokemon > " for stat in ["HP","ATK","DEF","SPA","SPD","SPE"]] # formatted string which if you put in {} will replace whats in the list into there
-pokemon2 = [f"Please input {stat} IV for second pokemon > " for stat in ["HP","ATK","DEF","SPA","SPD","SPE"]]
+offspringStats = {'HP': 0,
+                     'ATK': 0,
+                     'DEF': 0,
+                     'SPA': 0,
+                     'SPD': 0,
+                     'SPE': 0,
+                     'Gender': 'N/A'}
 
+perfectStats = {'HP': 31,
+                     'ATK': 31,
+                     'DEF': 31,
+                     'SPA': 31,
+                     'SPD': 31,
+                     'SPE': 31,
+                     'Gender': 'Female'}
 
-################# MAIN CODE ##########################
+# set methods as variables (think of methods as a return... returns something but you must set it to a variable before you can use it)
+maleAllStats = pokemon(startMaleStats)
+femaleAllStats = pokemon(startFemaleStats)
+offspringAllStats = pokemon(offspringStats)
+perfectStats = pokemon(perfectStats)
 
-### NEED TO CREATE DESTINY KNOT####
+# extract stat names and values of male and female
+statNames = list(perfectStats.stats.keys())
+maleIVs = list(maleAllStats.stats.values())
+femaleIVs = list(femaleAllStats.stats.values())
+offspringIVs = list(offspringAllStats.stats.values())
+perfectIVs = list(perfectStats.stats.values())
+
 destinyKnot = False
+eggCount = 0
 
-while destinyKnot == False:
-    DK = input("Do you have destiny knot? [y/n] ")
-    if DK == "y":
-        destinyKnot = True
-
-    elif DK == "n":
-        destinyKnot = True
-    else:
-        print("Please input a correct input")
-
-# Call the inputFunc function twice, once for each Pokemon. This sets initial conditions
-inputFunc(ivList1, pokemon1)
-inputFunc(ivList2, pokemon2)
-
-"""print(ivList1)
-print(ivList2)"""
-
-
-# check if either of the iv lists matches max IV
-while ivList1 != perfectList and ivList2 != perfectList:
-    # choose 3 random numbers between 1 and 6 (but elements 0 to 5)
-    selectedIV = random.sample(range(6), 3 if DK == "n" else 5) # 3 if default, 5 with destiny knot
-    notSelectedIV = list(set(range(6)) - set(selectedIV)) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
-
-    print("Elements", np.sort(selectedIV), "are passed down to offspring") # sort to make it easier to look at elements
-
-
-    ivList3 = [ random.choice((ivList1[selectedIV[0]], ivList2[selectedIV[0]])), 
-                random.choice((ivList1[selectedIV[1]], ivList2[selectedIV[1]])),
-                random.choice((ivList1[selectedIV[2]], ivList2[selectedIV[2]])),
-                random.choice((ivList1[selectedIV[3]], ivList2[selectedIV[3]])),
-                random.choice((ivList1[selectedIV[4]], ivList2[selectedIV[4]])),  
-                ] # pokemon 3 array
-    
-    for i, iv in enumerate(ivList3): # i is the index and iv is the actual items in the list
-        if iv == ivList1[selectedIV[i]]:
-            print(f"IV {i+1}: {iv} (from ivList1)")
-        else:
-            print(f"IV {i+1}: {iv} (from ivList2)")
-
-    print(notSelectedIV)
-    print(len(notSelectedIV))
-#    print("First pokemon's stats are ", ivList1)
-#    print("Second pokemon's stats are ", ivList2)
-#    print("The child pokemon's stats are ", ivList3)
-    break
 """
-    # gotta make this at the same time as the list
-    for i in range(len(notSelectedIV)):
-        ivList3[notSelectedIV[i]] = random.randint(0, 31)
-
-
-   print("The child pokemon's stats are ", ivList3)
-
-    if ivList3 == perfectList:
+while destinyKnot == False:
+    DK = input('Do you have destiny knot? [y/n] > ')
+    if DK == 'y':
+        destinyKnot == True
         break
-
+    elif DK  =='n':
+        destinyKnot == True
+        break
     else:
-        ###### MAKE IT SO THAT THE CHILD COUNT OF 31'S WILL REPLACE THAT OF PARENTS ####
-        perfCount(parent1PerfCount, ivList1)
-        perfCount(parent2PerfCount, ivList2)
-        perfCount(childPerfCount, ivList3)
+        print('Please input a valid input')
+"""
 
-        if perfCount(childPerfCount, ivList3) == perfCount(parent2PerfCount, ivList2) and perfCount(parent1PerfCount, ivList1):
-            for i in range(len(ivList3)):
-                if ivList1[i] != 0 and ivList2[i] != 0:
-                    break
-                if ivList3[i] > ivList2[i] or ivList3[i] > ivList1[i]:
-                    lowerNum = min(ivList1[i], ivList2[i])
-                    if lowerNum == ivList1[i]:
-                        ivList1 = ivList3
-                        print("Replaced first pokemon")
-                        break
-                    else:
-                        ivList2 = ivList3
-                        print("Replaced second pokemon")
-                        break
+
+#for i in range(3):
+while offspringIVs != perfectIVs:
+
+    if perfectIVCount(maleIVs) < 4 and perfectIVCount(femaleIVs) < 4:
+        DK = 'n'
+    else:
+        DK = 'y'
+
+    print(DK)
+
+    selectedIV = np.sort(random.sample(range(6),3 if DK == 'n' else 5)) # 3 if default, 5 with destiny knot
+    notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
+#    print('stats index', selectedIV, 'passed down')
+#    print('stat index', notSelectedIV, 'randomized')
+
+#    print('Going into breeding, male IVs are', maleIVs)
+#    print('Going into breeding, female IVs are',femaleIVs)
+    #print('Going into breeding, offspring IVs are',offspringIVs)
+    print('-----------------------------------')
+    for selected, val in enumerate(selectedIV):
+        offspringIVs[val] = random.choice((maleIVs[val],femaleIVs[val]))
+        if offspringIVs[val] == maleIVs[val]:
+            print('Chosen from male IVs')
             
+        else:
+            print('Chosen from female IVs')
+            
+        
+        print("Replaced stat", val+1, "with", offspringIVs[val])
+        print('-----------------------------------')
+    
+    for notSelected, notVal in enumerate(notSelectedIV):
+        offspringIVs[notVal] = random.randint(0, 31)
+        print('Randomized number is', offspringIVs[notVal], "going into stat", notVal+1)
+
+    # generate a gender for the offspring
+    offspringGender = genderFunction()
+#    print(offspringGender)
+    
+    for listIndex, stats in enumerate(offspringIVs):
+        if stats == 'Male' or stats == 'Female' or stats == 'N/A':
+            offspringIVs[listIndex] = offspringGender
+        else:
+            continue
+
+    print(offspringIVs)
+
+    # condition so that it breaks out of the while loop without replacing the parents
+    if offspringIVs == perfectIVs:
+        break
+    
+
+    if perfectIVCount(offspringIVs) > perfectIVCount(maleIVs) and offspringGender == 'Male':
+        maleStats = dict(zip(statNames, offspringIVs))
+        maleAllStats = pokemon(maleStats)
+        maleIVs = list(maleAllStats.stats.values())
+
+        print("Replaced male pokemon")
 
 
-        if perfCount(childPerfCount, ivList3) > perfCount(parent1PerfCount, ivList1):
-            ivList1 = ivList3
+    elif perfectIVCount(offspringIVs) > perfectIVCount(femaleIVs) and offspringGender == 'Female':
+        femaleStats = dict(zip(statNames, offspringIVs))
+        femaleAllStats = pokemon(femaleStats)
+        femaleIVs = list(femaleAllStats.stats.values())
 
-        if perfCount(childPerfCount, ivList3) > perfCount(parent2PerfCount, ivList2):
-            ivList2 = ivList3
+        print("Replaced female pokemon")
 
-        print("New Stats")
-        print("This is pokemon 1's stats", ivList1)
-        print("This is pokemon 2's stats", ivList2)
-        print("--------------------------------------------------")
+    
+    elif perfectIVCount(offspringIVs) == perfectIVCount(maleIVs) and perfectIVCount(offspringIVs) == perfectIVCount(femaleIVs):
+        for count, ivs in enumerate(offspringIVs):
+            if maleIVs[count] != 0 and femaleIVs[count] != 0:
+                break
+            if ivs > maleIVs[count] or ivs > femaleIVs[count]:
+                lowerNum = min(maleIVs[count], femaleIVs[count])
+                if lowerNum == maleIVs[count] and offspringGender == 'Male':
+                    maleStats = dict(zip(statNames, offspringIVs))
+                    maleAllStats = pokemon(maleStats)
+                    maleIVs = list(maleAllStats.stats.values())
+                    print("Lower number is from male and is replaced")
+                    break
+                elif lowerNum == femaleIVs[count] and offspringGender == 'Female':
+                    femaleStats = dict(zip(statNames, offspringIVs))
+                    femaleAllStats = pokemon(femaleStats)
+                    femaleIVs = list(femaleAllStats.stats.values())
+                    print("Lower number is from male and is replaced")
+                    break
+                else:
+                    break
+        
+          
 
-        counter += 1
+    print("Resulting Eggs are: ")
+    print('Male: ', maleIVs, ' and has', perfectIVCount(maleIVs), '31s')
+    print('Female: ', femaleIVs, ' and has', perfectIVCount(femaleIVs), '31s')
+    print('-----------------------------------')
 
-print("Congrats! It took ", counter,"number of eggs")   """ 
+    eggCount += 1
+    
+
+print("Congrats! The child pokemon has max IV! It took ", eggCount,"number of eggs")
+#print(maleIVs)
+#print(femaleIVs)
+#print(offspringIVs)
+   
+
+
 
