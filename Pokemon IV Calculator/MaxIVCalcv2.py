@@ -71,9 +71,9 @@ offspringIVs = list(offspringAllStats.stats.values())
 perfectIVs = list(perfectStats.stats.values())
 
 destinyKnot = False
+eggCount = 0
 
-
-
+"""
 while destinyKnot == False:
     DK = input('Do you have destiny knot? [y/n] > ')
     if DK == 'y':
@@ -84,82 +84,99 @@ while destinyKnot == False:
         break
     else:
         print('Please input a valid input')
+"""
 
 
+#for i in range(3):
+while offspringIVs != perfectIVs:
 
-for i in range(10):
-    while offspringIVs != perfectIVs:
+    if perfectIVCount(maleIVs) < 4 and perfectIVCount(femaleIVs) < 4:
+        DK = 'n'
+    else:
+        DK = 'y'
 
-        eggCount = 0
+    selectedIV = np.sort(random.sample(range(6),3 if DK == 'n' else 5)) # 3 if default, 5 with destiny knot
+    notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
+    print('stats index', selectedIV, 'passed down')
+    print('stat index', notSelectedIV, 'randomized')
 
-        if perfectIVCount(maleIVs) < 4 and perfectIVCount(femaleIVs) < 4:
-            DK = 'n'
-
-        selectedIV = np.sort(random.sample(range(6), 3 if DK == 'n' else 5)) # 3 if default, 5 with destiny knot
-        notSelectedIV = np.sort(list(set(range(6)) - set(selectedIV))) # this gets the list of notSelectedIV's indices by the ones that are not in selectedIV
-        print('stats index', selectedIV, 'passed down')
-        print('stat index', notSelectedIV, 'randomized')
-
-        print('Going into breeding, male IVs are', maleIVs)
-        print('Going into breeding, female IVs are',femaleIVs)
-        #print('Going into breeding, offspring IVs are',offspringIVs)
-        print('-----------------------------------')
-        for selected, val in enumerate(selectedIV):
-            offspringIVs[val] = random.choice((maleIVs[val],femaleIVs[val]))
-            if offspringIVs[val] == maleIVs[val]:
-                print('Chosen from male IVs')
-                
-            else:
-                print('Chosen from female IVs')
-                
+    print('Going into breeding, male IVs are', maleIVs)
+    print('Going into breeding, female IVs are',femaleIVs)
+    #print('Going into breeding, offspring IVs are',offspringIVs)
+    print('-----------------------------------')
+    for selected, val in enumerate(selectedIV):
+        offspringIVs[val] = random.choice((maleIVs[val],femaleIVs[val]))
+        if offspringIVs[val] == maleIVs[val]:
+            print('Chosen from male IVs')
             
-            print("Replaced stat", val+1, "with", offspringIVs[val])
-            print('-----------------------------------')
+        else:
+            print('Chosen from female IVs')
+            
         
-        for notSelected, notVal in enumerate(notSelectedIV):
-            offspringIVs[notVal] = random.randint(0, 31)
-            print('Randomized number is', offspringIVs[notVal], "going into stat", notVal+1)
-
-        #print('Going into breeding, male IVs are', maleIVs)
-        #print('Going into breeding, female IVs are',femaleIVs)
-        print('Resulting offspring IVs are',offspringIVs)
-        
-
-    #    # replace lists
-    #    if perfectIVCount(offspringIVs) == perfectIVCount(maleIVs) and perfectIVCount(offspringIVs) == perfectIVCount(femaleIVs):
-    #        for thirtyoneCount, thirtyone in enumerate(offspringIVs):
-    #            if maleIVs[thirtyoneCount] != 0 and femaleIVs[thirtyoneCount] != 0:
-    #                break
-    #            elif offspringIVs[thirtyoneCount] > maleIVs[thirtyoneCount] and offspringIVs[thirtyoneCount] > femaleIVs[thirtyoneCount]:
-    #                lowerNum = min(maleIVs[thirtyoneCount], femaleIVs[thirtyoneCount])
-    #                if lowerNum == maleIVs[thirtyoneCount]:
-    #                    maleIVs = offspringIVs
-    #                    print("Replaced male pokemon")
-    #                else:
-    #                    femaleIVs = offspringIVs
-    #                    print("Replaced female pokemon")
-
-
-        if perfectIVCount(offspringIVs) > perfectIVCount(maleIVs):
-            maleIVs = offspringIVs # these are lists
-            print("Replaced male pokemon")
-
-        elif perfectIVCount(offspringIVs) > perfectIVCount(femaleIVs):
-            femaleIVs = offspringIVs
-            print("Replaced female pokemon")
-
-        print("Resulting Eggs are: ")
-        print('Male: ', maleIVs, ' and has', perfectIVCount(maleIVs), '31s')
-        print('Female: ', femaleIVs, ' and has', perfectIVCount(femaleIVs), '31s')
+        print("Replaced stat", val+1, "with", offspringIVs[val])
         print('-----------------------------------')
+    
+    for notSelected, notVal in enumerate(notSelectedIV):
+        offspringIVs[notVal] = random.randint(0, 31)
+        print('Randomized number is', offspringIVs[notVal], "going into stat", notVal+1)
 
-        eggCount += 1
+    print(offspringIVs)
+
+    # condition so that it breaks out of the while loop without replacing the parents
+    if offspringIVs == perfectIVs:
         break
 
-#print("Congrats! The child pokemon has max IV! It took ", eggCount-1,"number of eggs")
-#print(maleIVs)
-#print(femaleIVs)
-#print(offspringIVs)
+    if perfectIVCount(offspringIVs) > perfectIVCount(maleIVs):
+        maleStats = dict(zip(statNames, offspringIVs))
+        maleAllStats = pokemon(maleStats)
+        maleIVs = list(maleAllStats.stats.values())
+#            maleIVs = offspringIVs.copy() # these are lists
+        print("Replaced male pokemon")
+
+
+    elif perfectIVCount(offspringIVs) > perfectIVCount(femaleIVs):
+        femaleStats = dict(zip(statNames, offspringIVs))
+        femaleAllStats = pokemon(femaleStats)
+        femaleIVs = list(femaleAllStats.stats.values())
+#            femaleIVs = offspringIVs.copy()
+        print("Replaced female pokemon")
+
+    
+    elif perfectIVCount(offspringIVs) == perfectIVCount(maleIVs) and perfectIVCount(offspringIVs) == perfectIVCount(femaleIVs):
+        for count, ivs in enumerate(offspringIVs):
+            if maleIVs[count] != 0 and femaleIVs[count] != 0:
+                break
+            if ivs > maleIVs[count] or ivs > femaleIVs[count]:
+                lowerNum = min(maleIVs[count], femaleIVs[count])
+                if lowerNum == maleIVs[count]:
+                    maleStats = dict(zip(statNames, offspringIVs))
+                    maleAllStats = pokemon(maleStats)
+                    maleIVs = list(maleAllStats.stats.values())
+                    print("Lower number is from male and is replaced")
+                    break
+                elif lowerNum == femaleIVs[count]:
+                    femaleStats = dict(zip(statNames, offspringIVs))
+                    femaleAllStats = pokemon(femaleStats)
+                    femaleIVs = list(femaleAllStats.stats.values())
+                    print("Lower number is from male and is replaced")
+                    break
+                else:
+                    break
+        
+                
+
+    print("Resulting Eggs are: ")
+    print('Male: ', maleIVs, ' and has', perfectIVCount(maleIVs), '31s')
+    print('Female: ', femaleIVs, ' and has', perfectIVCount(femaleIVs), '31s')
+    print('-----------------------------------')
+
+    eggCount += 1
+    
+
+print("Congrats! The child pokemon has max IV! It took ", eggCount,"number of eggs")
+print(maleIVs)
+print(femaleIVs)
+print(offspringIVs)
    
 
 
