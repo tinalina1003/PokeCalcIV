@@ -23,3 +23,5 @@ print(deck)
 
 def drawPhase():
     draw = print("You drew ")
+
+print("test")
