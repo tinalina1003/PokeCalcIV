@@ -162,3 +162,4 @@ totalProb = 32**6
 currentProb = #create probability, put in loop so it keeps updating
 print("Congrats! The child pokemon has max IV! It took ", counter-1,"number of eggs")
 
+print("test")
